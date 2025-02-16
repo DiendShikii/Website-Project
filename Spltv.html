@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spltv</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000; /* Latar belakang hitam */
+            color: #fff; /* Teks berwarna putih */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-user-select: none; /* Safari */
+            user-select: none;
+        }
+
+        .container {
+            background: #1a1a1a; /* Warna latar belakang kontainer */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff0000; /* Warna judul */
+        }
+
+        h3 {
+            text-align: center;
+            color: #ff0000; /* Warna judul */
+        }
+
+        .equation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #333; /* Warna latar belakang input */
+            color: #fff; /* Teks input berwarna putih */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ff1100;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #ff0000; /* Warna hasil */
+        }
+
+        .delete-button {
+            background-color: #ff0000; /* Warna merah untuk tombol hapus */
+            margin-left: 10px;
+        }
+
+        .delete-button:hover {
+            background-color: #ff0000; /* Warna merah lebih gelap saat hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SPLTV</h1>
+        <h3>By : David</h3>
+        <form id="equationForm">
+            <div class="equation">
+                <input type="text" placeholder="a1" required> x + 
+                <input type="text" placeholder="b1" required> y + 
+                <input type="text" placeholder="c1" required> z = 
+                <input type="text" placeholder="d1" required>
+            </div>
+            <div class="equation">
+                <input type="text" placeholder="a2" required> x + 
+                <input type="text" placeholder="b2" required> y + 
+                <input type="text" placeholder="c2" required> z = 
+                <input type="text" placeholder="d2" required>
+            </div>
+            <div class="equation">
+                <input type="text" placeholder="a3" required> x + 
+                <input type="text" placeholder="b3" required> y + 
+                <input type="text" placeholder="c3" required> z = 
+                <input type="text" placeholder="d3" required>
+            </div>
+            <button type="submit">Selesaikan</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        document.getElementById('equationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const a1 = parseFloat(event.target[0].value);
+            const b1 = parseFloat(event.target[1].value);
+            const c1 = parseFloat(event.target[2].value);
+            const d1 = parseFloat(event.target[3].value);
+
+            const a2 = parseFloat(event.target[4].value);
+            const b2 = parseFloat(event.target[5].value);
+            const c2 = parseFloat(event.target[6].value);
+            const d2 = parseFloat(event.target[7].value);
+
+            const a3 = parseFloat(event.target[8].value);
+            const b3 = parseFloat(event.target[9].value);
+            const c3 = parseFloat(event.target[10].value);
+            const d3 = parseFloat(event.target[11].value);
+
+            const result = solveLinearEquations(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3);
+            
+            document.getElementById('result').innerText = result;
+        });
+
+        function solveLinearEquations(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3) {
+            // Menghitung determinan
+            const D = a1 * (b2 * c3 - b3 * c2) - b1 * (a2 * c3 - a3 * c2) + c1 * (a2 * b3 - a3 * b2);
+            const Dx = d1 * (b2 * c3 - b3 * c2) - b1 * (d2 * c3 - d3 * c2) + c1 * (d2 * b3 - d3 * b2);
+            const Dy = a1 * (d2 * c3 - d3 * c2) - d1 * (a2 * c3 - a3 * c2) + c1 * (a2 * d3 - a3 * d2);
+            const Dz = a1 * (b2 * d3 - b3 * d2) - b1 * (a2 * d3 - a3 * d2) + d1 * (a2 * b3 - a3 * b2);
+
+            if (D === 0) {
+                return "SPLTV ini tidak bisa diselesaikan. Tolong masukkan SPLTV lain :)";
+            } else {
+                const x = Dx / D;
+                const y = Dy / D;
+                const z = Dz / D;
+                return `Solusi: x = ${x.toFixed(2)}, y = ${y.toFixed(2)}, z = ${z.toFixed(2)}`;
+            }
+        }
+
+        // Mencegah penyalinan teks
+        document.addEventListener('copy', function(event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>

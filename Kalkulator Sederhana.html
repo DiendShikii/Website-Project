@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Sederhana</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000000;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            -webkit-user-select: none; /* Safari */
+            user-select: none;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff0000; /* Warna judul */
+        }
+
+        h3 {
+            text-align: center;
+            color: #ff0000; /* Warna judul */
+        }
+
+        .calculator {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        #result {
+            width: 100%;
+            height: 40px;
+            font-size: 24px;
+            text-align: right;
+            margin-bottom: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff0000;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff0000;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Kalkulator Sederhana</h1>
+    <h3>By : David</h3>
+    <div class="calculator">
+        <input type="text" id="result" title="Hasil" placeholder="0" disabled>
+        <div class="buttons">
+            <button onclick="appendToResult('%')">%</button>
+            <button onclick="calculateSquare()">x²</button>
+            <button onclick="calculateSquareRoot()">√x</button>
+            <button onclick="clearResult()">C</button>
+            <button onclick="appendToResult('÷')">÷</button>
+            <button onclick="appendToResult('7')">7</button>
+            <button onclick="appendToResult('8')">8</button>
+            <button onclick="appendToResult('9')">9</button>
+            <button onclick="appendToResult('×')">×</button>
+            <button onclick="appendToResult('4')">4</button>
+            <button onclick="appendToResult('5')">5</button>
+            <button onclick="appendToResult('6')">6</button>
+            <button onclick="appendToResult('-')">-</button>
+            <button onclick="appendToResult('1')">1</button>
+            <button onclick="appendToResult('2')">2</button>
+            <button onclick="appendToResult('3')">3</button>
+            <button onclick="appendToResult('+')">+</button>
+            <button onclick="appendToResult('.')">.</button>
+            <button onclick="appendToResult('0')">0</button>
+            <button onclick="calculateResult()">=</button>
+        </div>
+    </div>
+    <script>
+        // Menambahkan nilai ke tampilan kalkulator
+        function appendToResult(value) {
+            document.getElementById('result').value += value;
+        }
+
+        // Menghapus hasil yang ditampilkan
+        function clearResult() {
+            document.getElementById('result').value = '';
+        }
+
+        // Menghitung hasil dari ekspresi yang dimasukkan
+        function calculateResult() {
+            const resultField = document.getElementById('result');
+            try {
+                // Mengganti persentase dengan operasi yang sesuai
+                let expression = resultField.value.replace(/%/g, '/100');
+                // Mengganti pembagian dengan titik dua
+                expression = expression.replace(/÷/g, '/');
+                // Mengganti simbol kali
+                expression = expression.replace(/×/g, '*');
+                // Menggunakan eval untuk menghitung ekspresi
+                resultField.value = eval(expression);
+            } catch (error) {
+                // Menangani kesalahan jika ekspresi tidak valid
+                resultField.value = 'Error';
+            }
+        }
+
+        // Menghitung akar kuadrat dari nilai yang dimasukkan
+        function calculateSquareRoot() {
+            const resultField = document.getElementById('result');
+            try {
+                const value = parseFloat(resultField.value);
+                if (value < 0) {
+                    resultField.value = 'Error'; // Menangani akar kuadrat negatif
+                } else {
+                    resultField.value = Math.sqrt(value);
+                }
+            } catch (error) {
+                resultField.value = 'Error';
+            }
+        }
+
+        // Menghitung pangkat kuadrat dari nilai yang dimasukkan
+        function calculateSquare() {
+            const resultField = document.getElementById('result');
+            try {
+                const value = parseFloat(resultField.value);
+                resultField.value = value ** 2; // Menghitung pangkat kuadrat
+            } catch (error) {
+                resultField.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>

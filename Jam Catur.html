@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jam Catur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .welcome-container {
+            text-align: center;
+        }
+
+        .welcome-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .welcome-container button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        .welcome-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .info-container {
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .info-container h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .info-container p {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Styles for chess clock */
+        .chess-clock-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .chess-clock {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .clock {
+            width: 400px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #007bff;
+            border-radius: 50px;
+            background-color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .clock.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .settings {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .player-settings {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .player-settings input {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .player-settings button {
+            padding: 5px 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .player-settings button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="welcomeScreen" class="welcome-container">
+        <h1>Jam Catur</h1>
+        <h3>Pembuat : Diend</h3>
+        <button onclick="startClock()">Start</button>
+        <button onclick="showInfo()">Tutorial</button>
+    </div>
+
+    <div id="infoScreen" class="hidden info-container">
+        <h2>Cara Menggunakan Jam Catur</h2>
+        <h4>Menurut : Diend</h4>
+        <h3><p>1. Klik tombol "Start" untuk memulai website jam catur.</p>
+        <p>2. Setiap pemain dapat mengklik sisinya masing-masing untuk berganti giliran.</p>
+        <p>3. Gunakan pengaturan di bawah jam untuk mengatur waktu individual untuk Pemain 1 dan Pemain 2.</p>
+        <p>4. Ketika waktu pemain habis, peringatan akan muncul, dan suara akan diputar.</p></h3>
+        <button onclick="goBack()">Kembali ke halaman</button>
+    </div>
+
+    <div id="mainApp" class="hidden">
+        <div class="chess-clock-container">
+            <div class="chess-clock">
+                <div class="clock" id="player1" onclick="toggleClock('player1')">
+                    <span id="time1">05:00</span>
+                    Player 1
+                </div>
+                <div class="clock" id="player2" onclick="toggleClock('player2')">
+                    <span id="time2">05:00</span>
+                    Player 2
+                </div>
+            </div>
+
+            <div class="settings">
+                <div class="player-settings">
+                    <h3>Atur waktu untuk player 1</h3>
+                    <input type="number" id="minutes1" placeholder="Min" min="0">
+                    <input type="number" id="seconds1" placeholder="Sec" min="0" max="59">
+                    <button onclick="setTime('player1')">Atur waktu</button>
+                </div>
+
+                <div class="player-settings">
+                    <h3>Atur waktu untuk player 2</h3>
+                    <input type="number" id="minutes2" placeholder="Min" min="0">
+                    <input type="number" id="seconds2" placeholder="Sec" min="0" max="59">
+                    <button onclick="setTime('player2')">Atur waktu</button>
+                </div>
+            </div>
+
+            <button class="back-button" onclick="goBackToWelcome()">Kembali ke halaman</button>
+
+            <div class="chess-clock-container">
+                <audio id="endSound" src="beep-05.mp3" preload="auto"></audio>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let activePlayer = null;
+        let timers = {
+            player1: { time: 300, interval: null },
+            player2: { time: 300, interval: null },
+        };
+
+        function startClock() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+        }
+
+        function showInfo() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('infoScreen').classList.remove('hidden');
+        }
+
+        function goBack() {
+            document.getElementById('infoScreen').classList.add('hidden');
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+        }
+
+        function goBackToWelcome() {
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function updateDisplay(player) {
+            document.getElementById(`time${player === 'player1' ? '1' : '2'}`).innerText = formatTime(timers[player].time);
+        }
+
+        function playEndSound() {
+            const sound = document.getElementById('endSound');
+            sound.play();
+        }
+
+        function startTimer(player) {
+            timers[player].interval = setInterval(() => {
+                if (timers[player].time > 0) {
+                    timers[player].time--;
+                    updateDisplay(player);
+                } else {
+                    clearInterval(timers[player].interval);
+                    playEndSound();
+                    alert(`${player === 'player1' ? 'Player 1' : 'Player 2'} loses on time!`);
+                }
+            }, 1000);
+        }
+
+        function stopTimer(player) {
+            clearInterval(timers[player].interval);
+        }
+
+        function toggleClock(player) {
+            if (activePlayer) {
+                stopTimer(activePlayer);
+                document.getElementById(activePlayer).classList.remove('active');
+            }
+
+            if (activePlayer !== player) {
+                activePlayer = player;
+                document.getElementById(player).classList.add('active');
+                startTimer(player);
+            } else {
+                activePlayer = null;
+            }
+        }
+
+        function setTime(player) {
+            const minutes = parseInt(document.getElementById(`minutes${player === 'player1' ? '1' : '2'}`).value) || 0;
+            const seconds = parseInt(document.getElementById(`seconds${player === 'player1' ? '1' : '2'}`).value) || 0;
+            const totalSeconds = minutes * 60 + seconds;
+
+            if (totalSeconds > 0) {
+                timers[player].time = totalSeconds;
+                updateDisplay(player);
+            } else {
+                alert('Please enter a valid time!');
+            }
+        }
+
+        updateDisplay('player1');
+        updateDisplay('player2');
+    </script>
+</body>
+</html>

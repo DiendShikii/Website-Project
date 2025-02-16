@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spldv</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000; /* Latar belakang hitam */
+            color: #fff; /* Teks berwarna putih */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-user-select: none; /* Mencegah penyalinan teks */
+            user-select: none; /* Mencegah penyalinan teks */
+        }
+
+        .container {
+            background: #1a1a1a; /* Warna latar belakang kontainer */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff0000; /* Warna judul */
+        }
+
+        .equation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #333; /* Warna latar belakang input */
+            color: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ff0000;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #ff0000; /* Warna hasil */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SPLDV</h1>
+        <form id="equationForm">
+            <div class="equation" id="equation1">
+                <input type="text" placeholder="a1" required> x + 
+                <input type="text" placeholder="b1" required> y = 
+                <input type="text" placeholder="c1" required>
+            </div>
+            <div class="equation" id="equation2">
+                <input type="text" placeholder="a2" required> x + 
+                <input type="text" placeholder="b2" required> y = 
+                <input type="text" placeholder="c2" required>
+            </div>
+            <button type="submit">Selesaikan</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        document.getElementById('equationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const a1 = parseFloat(document.querySelector('#equation1 input:nth-child(1)').value);
+            const b1 = parseFloat(document.querySelector('#equation1 input:nth-child(2)').value);
+            const c1 = parseFloat(document.querySelector('#equation1 input:nth-child(3)').value);
+
+            const a2 = parseFloat(document.querySelector('#equation2 input:nth-child(1)').value);
+            const b2 = parseFloat(document.querySelector('#equation2 input:nth-child(2)').value);
+            const c2 = parseFloat(document.querySelector('#equation2 input:nth-child(3)').value);
+
+            const result = solveLinearEquations(a1, b1, c1, a2, b2, c2);
+            
+            document.getElementById('result').innerText = result;
+        });
+
+        function solveLinearEquations(a1, b1, c1, a2, b2, c2) {
+            // Menghitung determinan
+            const D = a1 * b2 - a2 * b1;
+            const Dx = c1 * b2 - c2 * b1;
+            const Dy = a1 * c2 - a2 * c1;
+
+            if (D === 0) {
+                return "Sistem persamaan tidak memiliki solusi unik.";
+            } else {
+                const x = Dx / D;
+                const y = Dy / D;
+                return `Solusi: x = ${x.toFixed(2)}, y = ${y.toFixed(2)}`;
+            }
+        }
+
+        // Mencegah penyalinan teks
+        document.addEventListener('copy', function(event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>

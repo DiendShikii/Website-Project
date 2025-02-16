@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <link rel="icon" href="GitHub.png" type="image/png">
+    <style>
+        body {
+            background: black;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin-top: 100px; /* Atur sesuai kebutuhan */
+        }
+        button {
+            margin-top: 20px 10px; /* Tambahkan jarak antar tombol */
+            padding: 17px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            border: 0;
+            background-color: white;
+            box-shadow: rgb(0 0 0 / 5%) 0 8px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-size: 15px;
+            transition: all 0.5s ease;
+        }
+        button:hover {
+            letter-spacing: 3px;
+            background-color: hsl(0, 80%, 48%);
+            color: hsl(0, 0%, 100%);
+            box-shadow: rgb(220, 24, 24) 0px 7px 29px 0px;
+        }
+        button:active {
+            letter-spacing: 3px;
+            background-color: hsl(0, 80%, 48%);
+            color: hsl(0, 0%, 100%);
+            box-shadow: rgb(220, 24, 24) 0px 7px 29px 0px;
+            transform: translateY(10px);
+            transition: 100ms;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Menambah jarak antar tombol */
+        }
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll; /* Mencegah background terpotong di HP */
+            }
+            h1 {
+                font-size: 24px; /* Ukuran teks lebih kecil di HP */
+            }
+            .button-container {
+                width: 90%; /* Supaya tombol lebih proporsional */
+            }
+            button {
+                font-size: 14px;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Kalkulator</h1>
+    <div class="button-container">
+        <p>Dibawah ini adalah Project Kalkulator dari DiendShikii</p>
+        <button class="redirect-button" onclick="location.href='Akar.html'">Akar</button>
+        <button class="redirect-button" onclick="location.href='Barisan Aritmatika.html'">Barisan Aritmatika</button>
+        <button class="redirect-button" onclick="location.href='Barisan Geometri.html'">Barisan Geometri</button>
+        <button class="redirect-button" onclick="location.href='Deret Aritmatika.html'">Deret Aritmatika</button>
+        <button class="redirect-button" onclick="location.href='Deret Geometri.html'">Deret Geometri</button>
+        <button class="redirect-button" onclick="location.href='Eksponen.html'">Eksponen</button>
+        <button class="redirect-button" onclick="location.href='Fungsi Kuadrat.html'">Fungsi Kuadrat</button>
+        <button class="redirect-button" onclick="location.href='Kalkulator Sederhana.html'">Kalkulator Sederhana</button>
+        <button class="redirect-button" onclick="location.href='Logaritma.html'">Logaritma</button>
+        <button class="redirect-button" onclick="location.href='Spldv.html'">Spldv</button>
+        <button class="redirect-button" onclick="location.href='Spltv.html'">Spltv</button>
+    </div>
+</body>
+</html>
