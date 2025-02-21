@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penyelesaian Aljabar</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000; /* Latar belakang hitam */
+            color: #fff; /* Teks berwarna putih */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-user-select: none; /* Safari */
+            user-select: none;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: #1a1a1a; /* Warna latar belakang kontainer */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 350px;
+            text-align: center; /* Pusatkan isi kontainer */
+        }
+
+        h1, h3 {
+            color: #ff0000; /* Warna judul */
+        }
+
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%; /* Sesuaikan panjang input dan button */
+            border-radius: 5px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        
+        input {
+            border: 1px solid #ccc;
+            background-color: #333; /* Warna latar belakang input */
+            color: #fff; /* Teks input berwarna putih */
+        }
+
+        button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #ff1100;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff0000; /* Warna hasil */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Aljabar</h1>
+        <h3>By : David</h3>
+        <p>Masukkan nilai a, b, dan c untuk menyelesaikan ax + b = c</p>
+        <input type="number" id="a" placeholder="Masukkan a">
+        <input type="number" id="b" placeholder="Masukkan b">
+        <input type="number" id="c" placeholder="Masukkan c">
+        <button onclick="solveEquation()">Hitung</button>
+        <h3 id="result" class="result"></h3>
+    </div>
+
+    <script>
+        function solveEquation() {
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let c = parseFloat(document.getElementById("c").value);
+            
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                document.getElementById("result").innerText = "Masukkan angka yang valid!";
+                return;
+            }
+            
+            if (a === 0) {
+                if (b === c) {
+                    document.getElementById("result").innerText = "Tak terhingga banyak solusi.";
+                } else {
+                    document.getElementById("result").innerText = "Tidak ada solusi.";
+                }
+                return;
+            }
+            
+            let x = (c - b) / a;
+            document.getElementById("result").innerText = `Nilai x adalah ${x}`;
+        }
+    </script>
+</body>
+</html>
