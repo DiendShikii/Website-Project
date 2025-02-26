@@ -4,75 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jam</title>
-    <link rel="icon" href="GitHub.png" type="image/png">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            scroll-behavior: smooth;
+            font-family: "Poppins", sans-serif;
+        }
+        :root {
+            --bg-color: #111111;
+            --second-bg-color: #151515;
+            --text-color: white;
+            --main-color: #04fffb;
+        }
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
         body {
-            background: white;
-            background-size: cover;
-            font-family: Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 9%;
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: black;
+            z-index: 100;
+        }
+        section {
+            min-height: 100vh;
+            padding: 10rem 9% 10rem;
+        }
+        .heading {
             text-align: center;
-            padding: 20px;
+            font-size: 8rem;
         }
-        button {
-            margin-top: 20px 10px; /* Tambahkan jarak antar tombol */
-            padding: 17px 40px;
-            border-radius: 50px;
+        .jam{
+            background: var(--bg-color);
+            color: white;
+        }
+        .jam h1{
+            margin-bottom: 5rem;
+            color: white;
+        }
+        .jam-container{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .jam-box{
+            background-color: var(--main-color);
+            color: black;
+            height: 250px;
+            border-radius: 3rem;
             cursor: pointer;
-            border: 0;
-            background-color: white;
-            box-shadow: rgb(0 0 0 / 5%) 0 8px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-size: 15px;
-            transition: all 0.5s ease;
+            transition: 0.3s ease-in-out;
         }
-        button:hover {
-            letter-spacing: 3px;
-            background-color: hsl(217, 80%, 48%);
-            color: hsl(0, 0%, 100%);
-            box-shadow: rgb(24, 93, 220) 0px 7px 29px 0px;
+        .jam-box:hover{
+            background: white;
+            color: var(--main-color);
+            transform: scale(1.03);
         }
-        button:active {
-            letter-spacing: 3px;
-            background-color: hsl(217, 80%, 48%);
-            color: hsl(0, 0%, 100%);
-            box-shadow: rgb(24, 93, 220) 0px 7px 29px 0px;
-            transform: translateY(10px);
-            transition: 100ms;
-        }
-        .button-container {
+        .jam-box .jam-info{
             display: flex;
             flex-direction: column;
-            gap: 15px; /* Menambah jarak antar tombol */
+            text-align: left;
+            max-height: 200px;
+            justify-content: center;
+            align-items: baseline;
+            padding: 5em;
+        }
+        .jam-info h4{
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .jam-info p{
+            font-size: 1.6rem;
+            font-weight: 400;
+            max-height: 100px;
+            margin: auto;
         }
         @media (max-width: 991px) {
-            body {
-                background-attachment: scroll; /* Mencegah background terpotong di HP */
+            html {
+                font-size: 55%;
             }
-            h1 {
-                font-size: 24px; /* Ukuran teks lebih kecil di HP */
+            .jam-container{
+                padding-bottom: 7rem;
+                grid-template-columns: repeat(2,1fr);
+                margin: 0 5rem;
             }
-            .button-container {
-                width: 90%; /* Supaya tombol lebih proporsional */
+        }
+        @media (max-width: 895px) {
+            .jam h1 {
+                margin-bottom: 3rem;
             }
-            button {
-                font-size: 14px;
-                padding: 15px 30px;
-            }
+            .jam-container {
+                grid-template-columns: repeat(1, 1fr);
+            }    
         }
     </style>
 </head>
 <body>
-    <h1>Jam</h1>
-    <div class="button-container">
-        <p>👇Dibawah ini adalah Project Jam dari DiendShikii👇</p>
-        <button class="redirect-button" onclick="location.href='Jam Catur.html'">Jam Catur</button>
-    </div>
+    <section class="jam" id="jam">
+        <h1 class="heading">Jam</h1>
+
+        <div class="jam-container">
+            
+            <div class="jam-box"onclick="window.location.href='Jam Catur.html';">
+                <div class="jam-info">
+                    <h4>Jam Catur</h4>
+                    <p>Jam Catur adalah alat yang digunakan untuk mengontrol waktu permainan, memastikan setiap pemain memiliki batas waktu yang adil. Ini adalah Jam Catur buatan DiendShikii – klik di sini untuk menggunakannya!</p>
+                </div>
+            </div>
+    </section>
 </body>
 </html>
