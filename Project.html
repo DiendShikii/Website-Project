@@ -4,76 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project</title>
-    <link rel="icon" href="GitHub.png" type="image/png">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            scroll-behavior: smooth;
+            font-family: "Poppins", sans-serif;
+        }
+        :root {
+            --bg-color: #111111;
+            --second-bg-color: #151515;
+            --text-color: white;
+            --main-color: #04fffb;
+        }
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
         body {
-            background: black;
-            background-size: cover;
-            font-family: Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 9%;
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            color: white;
+            z-index: 100;
+        }
+        section {
+            min-height: 100vh;
+            padding: 10rem 9% 10rem;
+        }
+        .heading {
             text-align: center;
-            padding: 20px;
+            font-size: 8rem;
         }
-        button {
-            margin-top: 20px 10px; /* Tambahkan jarak antar tombol */
-            padding: 17px 40px;
-            border-radius: 50px;
+        .project{
+            background: var(--bg-color);
+            color: white;
+        }
+        .project h1{
+            margin-bottom: 5rem;
+            color: white;
+        }
+        .project-container{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .project-box{
+            background-color: var(--main-color);
+            color: black;
+            height: 250px;
+            border-radius: 3rem;
             cursor: pointer;
-            border: 0;
-            background-color: white;
-            box-shadow: rgb(0 0 0 / 5%) 0 8px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-size: 15px;
-            transition: all 0.5s ease;
+            transition: 0.3s ease-in-out;
         }
-        button:hover {
-            letter-spacing: 3px;
-            background-color: hsl(217, 80%, 48%);
-            color: hsl(0, 0%, 100%);
-            box-shadow: rgb(24, 93, 220) 0px 7px 29px 0px;
+        .project-box:hover{
+            background: white;
+            color: var(--main-color);
+            transform: scale(1.03);
         }
-        button:active {
-            letter-spacing: 3px;
-            background-color: hsl(217, 80%, 48%);
-            color: hsl(0, 0%, 100%);
-            box-shadow: rgb(24, 93, 220) 0px 7px 29px 0px;
-            transform: translateY(10px);
-            transition: 100ms;
-        }
-        .button-container {
+        .project-box .project-info{
             display: flex;
             flex-direction: column;
-            gap: 15px; /* Menambah jarak antar tombol */
+            text-align: left;
+            max-height: 200px;
+            justify-content: center;
+            align-items: baseline;
+            padding: 5em;
+        }
+        .project-info h4{
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .project-info p{
+            font-size: 1.6rem;
+            font-weight: 400;
+            max-height: 100px;
+            margin: auto;
         }
         @media (max-width: 991px) {
-            body {
-                background-attachment: scroll; /* Mencegah background terpotong di HP */
+            html {
+                font-size: 55%;
             }
-            h1 {
-                font-size: 24px; /* Ukuran teks lebih kecil di HP */
+            .project-container{
+                padding-bottom: 7rem;
+                grid-template-columns: repeat(2,1fr);
+                margin: 0 5rem;
             }
-            .button-container {
-                width: 90%; /* Supaya tombol lebih proporsional */
+        }
+        @media (max-width: 895px) {
+            .project h1 {
+                margin-bottom: 3rem;
             }
-            button {
-                font-size: 14px;
-                padding: 15px 30px;
-            }
+            .project-container {
+                grid-template-columns: repeat(1, 1fr);
+            }    
         }
     </style>
 </head>
 <body>
-    <h1>Project</h1>
-    <div class="button-container">
-        <p>👇Silahkan Klik Projectnya dibawah ini👇</p>
-        <button class="redirect-button" onclick="location.href='Kalkulator.html'">Kalkulator</button>
-        <button class="redirect-button" onclick="location.href='Jam.html'">Jam</button>
-    </div>
+    <section class="project" id="project">
+        <h1 class="heading">Project</h1>
+
+        <div class="project-container">
+            
+            <div class="project-box"onclick="window.location.href='Kalkulator.html';">
+                <div class="project-info">
+                    <h4>Kalkulator </h4>
+                    <p>Ini adalah proyek kalkulator dari DiendShikii, sebuah alat sederhana untuk melakukan perhitungan matematis dengan mudah dan cepat. Klik disini untuk melihatnya👇</p>
+                </div>
+            </div>
+
+            <div class="project-box"onclick="window.location.href='Jam.html';">
+                <div class="project-info">
+                    <h4>Jam</h4>
+                    <p>Ini adalah proyek jam dari DiendShikii, penunjuk waktu digital dengan desain sederhana namun fungsional. Klik disini untuk melihatnya👇</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
