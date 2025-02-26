@@ -315,9 +315,9 @@ span {
     display: grid;
     grid-template-columns: repeat(3,1fr);
     align-items: center;
-    gap: 2rem;
+    gap: 2.5rem;
 }
-.services-box{
+.service-box{
     background-color: var(--main-color);
     color: black;
     height: 250px;
@@ -325,12 +325,12 @@ span {
     cursor: pointer;
     transition: 0.3s ease-in-out;
 }
-.services-box:hover{
+.service-box:hover{
     background: white;
     color: var(--main-color);
     transform: scale(1.03);
 }
-.services-box .services-info{
+.service-box .service-info{
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -339,14 +339,16 @@ span {
     align-items: baseline;
     padding: 5em;
 }
-.services-info h4{
+.service-info h4{
     font-size: 2.5rem;
     font-weight: 500;
     margin-bottom: 1rem;
 }
-.services-info p{
+.service-info p{
     font-size: 1.6rem;
-    margin: 2rem 0 3rem;
+    font-weight: 400;
+    max-height: 100px;
+    margin: auto;
 }
 .contact {
     background-color: var(--second-bg-color);
