@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Bangun Datar</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-user-select: none;
+            user-select: none;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        h1, h3 {
+            color: #ff0000;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        input, button {
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        
+        input {
+            border: 1px solid #ccc;
+            background-color: #333;
+            color: #fff;
+        }
+
+        button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ff1100;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff0000;
+        }
+        @media (min-width: 991px) {
+            .container {
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Bangun Datar</h1>
+        <h3>By : David</h3>
+        <label for="shape">Pilih Bangun Datar:</label>
+        <select id="shape" onchange="updateInputs()">
+            <option value="Persegi">Persegi</option>
+            <option value="Persegi Panjang">Persegi Panjang</option>
+            <option value="Segitiga">Segitiga</option>
+            <option value="Lingkaran">Lingkaran</option>
+            <option value="Jajar Genjang">Jajar Genjang</option>
+            <option value="Trapesium">Trapesium</option>
+            <option value="Belah Ketupat">Belah Ketupat</option>
+            <option value="Layang-layang">Layang-layang</option>
+        </select>
+
+        <label for="calculation">Pilih Perhitungan:</label>
+        <select id="calculation" onchange="updateInputs()">
+            <option value="Keliling">Keliling</option>
+            <option value="Luas">Luas</option>
+        </select>
+
+        <div id="inputs"></div>
+
+        <button onclick="calculate()">Hitung</button>
+        <h3>Hasil: <span id="result">-</span></h3>
+    </div>
+
+    <script>
+        function updateInputs() {
+            const shape = document.getElementById("shape").value;
+            const calculation = document.getElementById("calculation").value;
+            const inputsDiv = document.getElementById("inputs");
+            inputsDiv.innerHTML = "";
+            
+            let inputNames = [];
+            if (calculation === "Keliling") {
+                if (shape === "Persegi") inputNames = ["Sisi"];
+                else if (shape === "Persegi Panjang") inputNames = ["Panjang", "Lebar"];
+                else if (shape === "Segitiga") inputNames = ["Sisi A", "Sisi B", "Sisi C"];
+                else if (shape === "Lingkaran") inputNames = ["Jari-jari"];
+                else if (shape === "Jajar Genjang") inputNames = ["Alas", "Sisi Miring"];
+                else if (shape === "Trapesium") inputNames = ["Sisi A", "Sisi B", "Sisi C", "Sisi D"];
+                else if (shape === "Belah Ketupat") inputNames = ["Sisi"];
+                else if (shape === "Layang-layang") inputNames = ["Sisi Pendek", "Sisi Panjang"];
+            } else {
+                if (shape === "Persegi") inputNames = ["Sisi"];
+                else if (shape === "Persegi Panjang") inputNames = ["Panjang", "Lebar"];
+                else if (shape === "Segitiga") inputNames = ["Alas", "Tinggi"];
+                else if (shape === "Lingkaran") inputNames = ["Jari-jari"];
+                else if (shape === "Jajar Genjang") inputNames = ["Alas", "Tinggi"];
+                else if (shape === "Trapesium") inputNames = ["Sisi Atas", "Sisi Bawah", "Tinggi"];
+                else if (shape === "Belah Ketupat") inputNames = ["Diagonal 1", "Diagonal 2"];
+                else if (shape === "Layang-layang") inputNames = ["Diagonal 1", "Diagonal 2"];
+            }
+            inputNames.forEach(name => {
+                inputsDiv.innerHTML += `<label>${name}: <input type="number" id="${name}" required></label>`;
+            });
+        }
+
+        function calculate() {
+            const shape = document.getElementById("shape").value;
+            const calculation = document.getElementById("calculation").value;
+            let result = 0;
+            
+            if (calculation === "Keliling") {
+                if (shape === "Persegi") result = 4 * parseFloat(document.getElementById("Sisi").value);
+                else if (shape === "Persegi Panjang") result = 2 * (parseFloat(document.getElementById("Panjang").value) + parseFloat(document.getElementById("Lebar").value));
+                else if (shape === "Segitiga") result = parseFloat(document.getElementById("Sisi A").value) + parseFloat(document.getElementById("Sisi B").value) + parseFloat(document.getElementById("Sisi C").value);
+                else if (shape === "Lingkaran") result = 2 * Math.PI * parseFloat(document.getElementById("Jari-jari").value);
+                else if (shape === "Jajar Genjang") result = 2 * (parseFloat(document.getElementById("Alas").value) + parseFloat(document.getElementById("Sisi Miring").value));
+                else if (shape === "Trapesium") result = parseFloat(document.getElementById("Sisi A").value) + parseFloat(document.getElementById("Sisi B").value) + parseFloat(document.getElementById("Sisi C").value) + parseFloat(document.getElementById("Sisi D").value);
+                else if (shape === "Belah Ketupat") result = 4 * parseFloat(document.getElementById("Sisi").value);
+                else if (shape === "Layang-layang") result = 2 * (parseFloat(document.getElementById("Sisi Pendek").value) + parseFloat(document.getElementById("Sisi Panjang").value));
+            } else {
+                if (shape === "Persegi") result = Math.pow(parseFloat(document.getElementById("Sisi").value), 2);
+                else if (shape === "Persegi Panjang") result = parseFloat(document.getElementById("Panjang").value) * parseFloat(document.getElementById("Lebar").value);
+                else if (shape === "Segitiga") result = 0.5 * parseFloat(document.getElementById("Alas").value) * parseFloat(document.getElementById("Tinggi").value);
+                else if (shape === "Lingkaran") result = Math.PI * Math.pow(parseFloat(document.getElementById("Jari-jari").value), 2);
+                else if (shape === "Jajar Genjang") result = parseFloat(document.getElementById("Alas").value) * parseFloat(document.getElementById("Tinggi").value);
+                else if (shape === "Trapesium") result = 0.5 * (parseFloat(document.getElementById("Sisi Atas").value) + parseFloat(document.getElementById("Sisi Bawah").value)) * parseFloat(document.getElementById("Tinggi").value);
+                else if (shape === "Belah Ketupat" || shape === "Layang-layang") result = 0.5 * parseFloat(document.getElementById("Diagonal 1").value) * parseFloat(document.getElementById("Diagonal 2").value);
+            }
+            document.getElementById("result").innerText = result.toFixed(2);
+        }
+    </script>
+</body>
+</html>
