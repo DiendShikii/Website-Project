@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Trigonometri</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            -webkit-user-select: none;
+            user-select: none;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        h1, h3 {
+            color: #ff0000;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        input, button {
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        
+        input {
+            border: 1px solid #ccc;
+            background-color: #333;
+            color: #fff;
+        }
+
+        button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ff1100;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trigonometri</h1>
+        <h3>By : David</h3>
+        <p>Pilih perhitungan:</p>
+        <select id="jenisPerhitungan" onchange="updateInputs()">
+            <option value="a">Hitung Sisi Samping (a)</option>
+            <option value="b">Hitung Sisi Depan (b)</option>
+            <option value="c">Hitung Sisi Miring (c)</option>
+        </select>
+        <div class="input-container">
+            <input type="number" id="a" placeholder="Sisi Samping (a)"> 
+            <input type="number" id="b" placeholder="Sisi Depan (b)">
+            <input type="number" id="c" placeholder="Sisi Miring (c)">
+        </div>
+        <button onclick="hitungTrigonometri()">Hitung</button>
+        <h3 id="hasil"></h3>
+    </div>
+    
+    <script>
+        function updateInputs() {
+            let jenis = document.getElementById("jenisPerhitungan").value;
+            document.getElementById("a").style.display = "none";
+            document.getElementById("b").style.display = "none";
+            document.getElementById("c").style.display = "none";
+            
+            if (jenis === "a") {
+                document.getElementById("b").style.display = "block";
+                document.getElementById("c").style.display = "block";
+            } else if (jenis === "b") {
+                document.getElementById("a").style.display = "block";
+                document.getElementById("c").style.display = "block";
+            } else if (jenis === "c") {
+                document.getElementById("a").style.display = "block";
+                document.getElementById("b").style.display = "block";
+            }
+        }
+        
+        updateInputs();
+        
+        function hitungTrigonometri() {
+            let jenis = document.getElementById("jenisPerhitungan").value;
+            let a = parseFloat(document.getElementById("a").value);
+            let b = parseFloat(document.getElementById("b").value);
+            let c = parseFloat(document.getElementById("c").value);
+            let hasil = "";
+            
+            if (jenis === "a") {
+                if (isNaN(b) || isNaN(c) || b <= 0 || c <= 0 || c <= b) {
+                    hasil = "Masukkan nilai sisi yang valid!";
+                } else {
+                    hasil = `Sisi samping (a) = ${(Math.sqrt(c * c - b * b)).toFixed(2)}`;
+                }
+            } else if (jenis === "b") {
+                if (isNaN(a) || isNaN(c) || a <= 0 || c <= 0 || c <= a) {
+                    hasil = "Masukkan nilai sisi yang valid!";
+                } else {
+                    hasil = `Sisi depan (b) = ${(Math.sqrt(c * c - a * a)).toFixed(2)}`;
+                }
+            } else if (jenis === "c") {
+                if (isNaN(a) || isNaN(b) || a <= 0 || b <= 0) {
+                    hasil = "Masukkan nilai sisi yang valid!";
+                } else {
+                    hasil = `Sisi miring (c) = ${(Math.sqrt(a * a + b * b)).toFixed(2)}`;
+                }
+            }
+            
+            document.getElementById("hasil").innerText = hasil;
+        }
+    </script>
+</body>
+</html>
