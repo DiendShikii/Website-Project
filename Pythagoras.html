@@ -96,15 +96,15 @@
         <h3>By : David</h3>
         <p>Pilih perhitungan:</p>
         <select id="jenisPerhitungan" onchange="updateInputs()">
-            <option value="c">Hitung Sisi Miring (c)</option>
             <option value="a">Hitung Sisi Tinggi (a)</option>
             <option value="b">Hitung Sisi Alas (b)</option>
+            <option value="c">Hitung Sisi Miring (c)</option>
         </select>
         
         <div class="input-container">
-            <input type="number" id="a" placeholder="Sisi a"> 
-            <input type="number" id="b" placeholder="Sisi b">
-            <input type="number" id="c" placeholder="Sisi c">
+            <input type="number" id="a" placeholder="Sisi Tinggi (a)"> 
+            <input type="number" id="b" placeholder="Sisi Alas (b)">
+            <input type="number" id="c" placeholder="Sisi Miring (c)">
         </div>
         
         <button onclick="hitungPythagoras()">Hitung</button>
