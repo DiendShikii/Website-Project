@@ -313,7 +313,7 @@ span {
 }
 .services-container{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
     align-items: center;
     gap: 2.5rem;
 }
@@ -445,11 +445,6 @@ span {
 @media (max-width: 991px) {
     html {
         font-size: 55%;
-    }
-    .services-container{
-        padding-bottom: 7rem;
-        grid-template-columns: repeat(2,1fr);
-        margin: 0 5rem;
     }
 }
 @media (max-width: 991px) {
