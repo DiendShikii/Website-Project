@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Satuan Luas</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            -webkit-user-select: none; /* Safari */
+            user-select: none;
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: red;
+        }
+        h3 {
+            color: red;
+        }
+        select, input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+        }
+        input {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+        }
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Satuan Luas</h1>
+        <h3>By : David</h3>
+        <input type="number" id="inputValue" placeholder="Masukkan nilai">
+        <select id="fromUnit">
+            <option value="km2">Kilometer Persegi (Km²)</option>
+            <option value="hm2">Hektometer Persegi (Hm²)</option>
+            <option value="dam2">Dekameter Persegi (Dam²)</option>
+            <option value="m2">Meter Persegi (M²)</option>
+            <option value="dm2">Desimeter Persegi (Dm²)</option>
+            <option value="cm2">Centimeter Persegi (Cm²)</option>
+            <option value="mm2">Milimeter Persegi (Mm²)</option>
+        </select>
+        <span>ke</span>
+        <select id="toUnit">
+            <option value="km2">Kilometer Persegi (Km²)</option>
+            <option value="hm2">Hektometer Persegi (Hm²)</option>
+            <option value="dam2">Dekameter Persegi (Dam²)</option>
+            <option value="m2">Meter Persegi (M²)</option>
+            <option value="dm2">Desimeter Persegi (Dm²)</option>
+            <option value="cm2">Centimeter Persegi (Cm²)</option>
+            <option value="mm2">Milimeter Persegi (Mm²)</option>
+        </select>
+        <button onclick="convert()">Konversi</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function convert() {
+            let value = parseFloat(document.getElementById("inputValue").value);
+            let fromUnit = document.getElementById("fromUnit").value;
+            let toUnit = document.getElementById("toUnit").value;
+
+            let conversionFactors = {
+                km2: 1000000,
+                hm2: 10000,
+                dam2: 100,
+                m2: 1,
+                dm2: 0.01,
+                cm2: 0.0001,
+                mm2: 0.000001
+            };
+
+            let result = (value * conversionFactors[fromUnit]) / conversionFactors[toUnit];
+            document.getElementById("result").innerHTML = `Hasil: ${result} ${toUnit}`;
+        }
+    </script>
+</body>
+</html>

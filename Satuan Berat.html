@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Satuan Berat</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            -webkit-user-select: none; /* Safari */
+            user-select: none;
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: red;
+        }
+        h3 {
+            color: red;
+        }
+        select, input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+        }
+        input {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+        }
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Satuan Berat</h1>
+        <h3>By : David</h3>
+        <input type="number" id="inputValue" placeholder="Masukkan nilai">
+        <select id="fromUnit">
+            <option value="ton">Ton</option>
+            <option value="kg">Kilogram (Kg)</option>
+            <option value="hg">Hektogram (Hg)</option>
+            <option value="dag">Dekagram (Dag)</option>
+            <option value="g">Gram (G)</option>
+            <option value="dg">Desigram (Dg)</option>
+            <option value="cg">Centigram (Cg)</option>
+            <option value="mg">Miligram (Mg)</option>
+        </select>
+        <span>ke</span>
+        <select id="toUnit">
+            <option value="ton">Ton</option>
+            <option value="kg">Kilogram (Kg)</option>
+            <option value="hg">Hektogram (Hg)</option>
+            <option value="dag">Dekagram (Dag)</option>
+            <option value="g">Gram (G)</option>
+            <option value="dg">Desigram (Dg)</option>
+            <option value="cg">Centigram (Cg)</option>
+            <option value="mg">Miligram (Mg)</option>
+        </select>
+        <button onclick="convert()">Konversi</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function convert() {
+            let value = parseFloat(document.getElementById("inputValue").value);
+            let fromUnit = document.getElementById("fromUnit").value;
+            let toUnit = document.getElementById("toUnit").value;
+
+            let conversionFactors = {
+                ton: 1000000,
+                kg: 1000,
+                hg: 100,
+                dag: 10,
+                g: 1,
+                dg: 0.1,
+                cg: 0.01,
+                mg: 0.001
+            };
+
+            let result = (value * conversionFactors[fromUnit]) / conversionFactors[toUnit];
+            document.getElementById("result").innerHTML = `Hasil: ${result} ${toUnit}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Satuan Waktu</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-user-select: none; /* Safari */
+            user-select: none;
+        }
+        h1 {
+            color: red;
+        }
+        h3 {
+            color: red;
+        }
+        select, input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+        }
+        input {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+        }
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Satuan Waktu</h1>
+        <h3>By : David</h3>
+        <input type="number" id="inputValue" placeholder="Masukkan nilai">
+        <select id="fromUnit">
+            <option value="millidetik">Milidetik</option>
+            <option value="detik">Detik</option>
+            <option value="menit">Menit</option>
+            <option value="jam">Jam</option>
+            <option value="hari">Hari</option>
+            <option value="minggu">Minggu</option>
+            <option value="bulan">Bulan</option>
+            <option value="semester">Semester</option>
+            <option value="yahun">Tahun</option>
+            <option value="lustrum">Lustrum</option>
+            <option value="windu">Windu</option>
+            <option value="dekade">Dasawarsa/Dekade</option>
+            <option value="abad">Abad</option>
+            <option value="milenium">Milenium</option>
+        </select>
+        <span>ke</span>
+        <select id="toUnit">
+            <option value="millidetik">Milidetik</option>
+            <option value="detik">Detik</option>
+            <option value="menit">Menit</option>
+            <option value="jam">Jam</option>
+            <option value="hari">Hari</option>
+            <option value="minggu">Minggu</option>
+            <option value="bulan">Bulan</option>
+            <option value="semester">Semester</option>
+            <option value="yahun">Tahun</option>
+            <option value="lustrum">Lustrum</option>
+            <option value="windu">Windu</option>
+            <option value="dekade">Dasawarsa/Dekade</option>
+            <option value="abad">Abad</option>
+        </select>
+        <button onclick="convert()">Konversi</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function convert() {
+            let value = parseFloat(document.getElementById("inputValue").value);
+            let fromUnit = document.getElementById("fromUnit").value;
+            let toUnit = document.getElementById("toUnit").value;
+
+            let conversionFactors = {
+                millidetik: 0.001,
+                detik: 1,
+                menit: 60,
+                jam: 3600,
+                hari: 86400,
+                minggu: 604800,
+                bulan: 2629800,
+                semester: 15778800,
+                tahun: 31557600,
+                lustrum: 157788000,
+                windu: 252460800,
+                dekade: 315576000,
+                abad: 3155760000,
+                milenium: 31557600000
+            };
+
+            let result = (value * conversionFactors[fromUnit]) / conversionFactors[toUnit];
+            document.getElementById("result").innerHTML = `Hasil: ${result} ${toUnit}`;
+        }
+    </script>
+</body>
+</html>

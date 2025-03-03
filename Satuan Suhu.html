@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Satuan Suhu</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            -webkit-user-select: none; /* Safari */
+            user-select: none;
+        }
+        .container {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: red;
+        }
+        h3 {
+            color: red;
+        }
+        select, input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+        }
+        input {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+        }
+        button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Satuan Suhu</h1>
+        <h3>By : David</h3>
+        <input type="number" id="inputValue" placeholder="Masukkan nilai">
+        <select id="fromUnit">
+            <option value="kelvin">Kelvin (°K)</option>
+            <option value="celsius">Celsius (°C)</option>
+            <option value="fahrenheit">Fahrenheit (°F)</option>
+            <option value="rankine">Rankine (°R)</option>
+            <option value="reamur">Reamur (°Re)</option>
+        </select>
+        <span>ke</span>
+        <select id="toUnit">
+            <option value="kelvin">Kelvin (°K)</option>
+            <option value="celsius">Celsius (°C)</option>
+            <option value="fahrenheit">Fahrenheit (°F)</option>
+            <option value="rankine">Rankine (°R)</option>
+            <option value="reamur">Reamur (°Re)</option>
+        </select>
+        <button onclick="convert()">Konversi</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function convert() {
+            let value = parseFloat(document.getElementById("inputValue").value);
+            let fromUnit = document.getElementById("fromUnit").value;
+            let toUnit = document.getElementById("toUnit").value;
+            let result;
+
+            // Konversi ke Kelvin sebagai basis
+            let kelvinValue;
+            if (fromUnit === "kelvin") kelvinValue = value;
+            else if (fromUnit === "celsius") kelvinValue = value + 273.15;
+            else if (fromUnit === "fahrenheit") kelvinValue = (value - 32) * 5/9 + 273.15;
+            else if (fromUnit === "rankine") kelvinValue = value * 5/9;
+            else if (fromUnit === "reamur") kelvinValue = value * 5/4 + 273.15;
+
+            // Konversi dari Kelvin ke satuan tujuan
+            if (toUnit === "kelvin") result = kelvinValue;
+            else if (toUnit === "celsius") result = kelvinValue - 273.15;
+            else if (toUnit === "fahrenheit") result = (kelvinValue - 273.15) * 9/5 + 32;
+            else if (toUnit === "rankine") result = kelvinValue * 9/5;
+            else if (toUnit === "reamur") result = (kelvinValue - 273.15) * 4/5;
+
+            document.getElementById("result").innerHTML = `Hasil: ${result.toFixed(2)} ${toUnit}`;
+        }
+    </script>
+</body>
+</html>
