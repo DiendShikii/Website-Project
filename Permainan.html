@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            scroll-behavior: smooth;
+            font-family: "Poppins", sans-serif;
+        }
+        :root {
+            --bg-color: #111111;
+            --second-bg-color: #151515;
+            --text-color: white;
+            --main-color: #04fffb;
+        }
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 9%;
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        section {
+            min-height: 100vh;
+            padding: 10rem 9% 10rem;
+        }
+        .heading {
+            text-align: center;
+            font-size: 8rem;
+        }
+        .project{
+            background: var(--bg-color);
+            color: white;
+        }
+        .project h1{
+            margin-bottom: 5rem;
+            color: white;
+        }
+        .project-container{
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .project-box{
+            background-color: var(--main-color);
+            color: black;
+            height: 250px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+        .project-box:hover{
+            background: white;
+            color: var(--main-color);
+            transform: scale(1.03);
+        }
+        .project-box .project-info{
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            max-height: 200px;
+            justify-content: center;
+            align-items: baseline;
+            padding: 5em;
+        }
+        .project-info h4{
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .project-info p{
+            font-size: 1.6rem;
+            font-weight: 400;
+            max-height: 100px;
+            margin: auto;
+        }
+        @media (max-width: 895px) {
+            html {
+                font-size: 55%;
+            }
+            .project h1 {
+                margin-bottom: 3rem;
+            }
+            .project-container {
+                grid-template-columns: repeat(1, 1fr);
+            }    
+        }
+    </style>
+</head>
+<body>
+    <section class="project" id="project">
+        <h1 class="heading">Project</h1>
+
+        <div class="project-container">
+            
+            <div class="project-box"onclick="window.location.href='Ular.html';">
+                <div class="project-info">
+                    <h4>Permainan Ular</h4>
+                    <p>Siap mengendalikan ular yang terus tumbuh? Makan sebanyak mungkin tanpa menabrak! Coba permainan Ular buatan DiendShikii dengan klik di sini!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

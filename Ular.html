@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Ular</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #222;
+        }
+        canvas {
+            background-color: black;
+        }
+        .scoreboard {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: 50px 50px 50px;
+            grid-template-rows: 50px 50px 50px;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .controls button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .up { grid-column: 2; grid-row: 1; }
+        .left { grid-column: 1; grid-row: 2; }
+        .right { grid-column: 3; grid-row: 2; }
+        .down { grid-column: 2; grid-row: 3; }
+    </style>
+</head>
+<body>
+    <div class="scoreboard">Score: <span id="score">0</span> | High Score: <span id="highScore">0</span></div>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div class="controls">
+        <button class="up" onclick="changeDirection({key: 'ArrowUp'})">⬆️</button>
+        <button class="left" onclick="changeDirection({key: 'ArrowLeft'})">⬅️</button>
+        <button class="right" onclick="changeDirection({key: 'ArrowRight'})">➡️</button>
+        <button class="down" onclick="changeDirection({key: 'ArrowDown'})">⬇️</button>
+    </div>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreDisplay = document.getElementById("score");
+        const highScoreDisplay = document.getElementById("highScore");
+        
+        let snake = [{x: 200, y: 200}];
+        let food = {x: 100, y: 100};
+        let direction = "RIGHT";
+        let changingDirection = false;
+        let score = 0;
+        let highScore = localStorage.getItem("highScore") || 0;
+        highScoreDisplay.innerText = highScore;
+
+        document.addEventListener("keydown", changeDirection);
+
+        function changeDirection(event) {
+            if (changingDirection) return;
+            changingDirection = true;
+            const keyPressed = event.key;
+            const goingUp = direction === "UP";
+            const goingDown = direction === "DOWN";
+            const goingLeft = direction === "LEFT";
+            const goingRight = direction === "RIGHT";
+            
+            if (keyPressed === "ArrowUp" && !goingDown) direction = "UP";
+            if (keyPressed === "ArrowDown" && !goingUp) direction = "DOWN";
+            if (keyPressed === "ArrowLeft" && !goingRight) direction = "LEFT";
+            if (keyPressed === "ArrowRight" && !goingLeft) direction = "RIGHT";
+        }
+
+        function moveSnake() {
+            const head = { ...snake[0] };
+            if (direction === "UP") head.y -= 20;
+            if (direction === "DOWN") head.y += 20;
+            if (direction === "LEFT") head.x -= 20;
+            if (direction === "RIGHT") head.x += 20;
+            
+            snake.unshift(head);
+            if (head.x === food.x && head.y === food.y) {
+                score += 10;
+                scoreDisplay.innerText = score;
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem("highScore", highScore);
+                    highScoreDisplay.innerText = highScore;
+                }
+                generateFood();
+            } else {
+                snake.pop();
+            }
+        }
+
+        function generateFood() {
+            food.x = Math.floor(Math.random() * 20) * 20;
+            food.y = Math.floor(Math.random() * 20) * 20;
+        }
+
+        function drawSnake() {
+            ctx.fillStyle = "lime";
+            snake.forEach(part => {
+                ctx.fillRect(part.x, part.y, 20, 20);
+            });
+        }
+
+        function drawFood() {
+            ctx.fillStyle = "red";
+            ctx.fillRect(food.x, food.y, 20, 20);
+        }
+
+        function checkGameOver() {
+            const head = snake[0];
+            if (head.x < 0 || head.y < 0 || head.x >= canvas.width || head.y >= canvas.height) {
+                return true;
+            }
+            for (let i = 1; i < snake.length; i++) {
+                if (snake[i].x === head.x && snake[i].y === head.y) return true;
+            }
+            return false;
+        }
+
+        function gameOver() {
+            const overlay = document.createElement("div");
+            overlay.innerHTML = `
+                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; text-align: center;">
+                    <h2>Game Over!</h2>
+                    <p>Score: ${score}</p>
+                    <button onclick="location.reload()">Coba Lagi</button>
+                    <button onclick="window.close()">Quit</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function main() {
+            if (checkGameOver()) {
+                gameOver();
+                return;
+            }
+            changingDirection = false;
+            setTimeout(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawFood();
+                moveSnake();
+                drawSnake();
+                main();
+            }, 100);
+        }
+
+        generateFood();
+        main();
+    </script>
+</body>
+</html>
