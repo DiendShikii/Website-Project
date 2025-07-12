@@ -167,7 +167,7 @@ span {
     position: relative;
 }
 .text-animation span::before {
-    content: "Web Developer";
+    content: "Pemula";
     color: var(--main-color);
     animation: words 20s infinite;
 }
@@ -189,23 +189,11 @@ span {
 @keyframes words {
     0%, 
     20% {
-        content: "Web Developer";
+        content: "Pelajar";
     }
     21%, 
     40% {
-        content: "Programmer";
-    }
-    41%, 
-    60% {
-        content: "Developer Project";
-    } 
-    61%, 
-    80% {
-        content: "Content Manager";
-    }
-    81%, 
-    100% {
-        content: "Programmer x Matematics";
+        content: "Murid SMA";
     }
 }
 @keyframes typing {
@@ -278,7 +266,7 @@ span {
 }
 
 .about-content .text-animation span::before {
-    content: "Web Developer";
+    content: "Pemula";
     color: var(--main-color);
     animation: words 20s infinite;
 }
