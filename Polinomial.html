@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Penjumlahan & Pengurangan Polinomial</title>
+  <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #000; /* Latar belakang hitam */
+        color: #ff0000; /* Teks berwarna merah */
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center; /* Mengatur konten ke tengah secara horizontal */
+        align-items: center; /* Mengatur konten ke tengah secara vertikal */
+        height: 100vh; /* Mengatur tinggi body agar memenuhi viewport */
+        -webkit-user-select: none; /* Safari */
+        user-select: none;
+            
+    }
+    .container {
+        max-width: 450px; /* Lebar kontainer ditingkatkan */
+        background: #1a1a1a; /* Latar belakang kontainer */
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    h1, h3 {
+        text-align: center;
+        color: #ff0000;
+    }
+
+    input[type="text"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ff0000;
+        border-radius: 5px;
+        background: #444;
+        color: #ffffff;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    button {
+        flex: 1;
+        padding: 10px;
+        background-color: #ff0000;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #cc0000;
+    }
+
+    .result {
+        margin-top: 20px;
+        font-size: 1.2em;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Operasi Polinomial</h1>
+
+    <label for="poly1">Polinomial 1:</label><br>
+    <input type="text" id="poly1" placeholder="Contoh: 2x^2 + 3x + 1"><br>
+
+    <label for="poly2">Polinomial 2:</label><br>
+    <input type="text" id="poly2" placeholder="Contoh: x^2 + 4"><br>
+
+    <div class="btn-group">
+      <button onclick="operasiPolinomial('tambah')">Jumlahkan</button>
+      <button onclick="operasiPolinomial('kurang')">Kurangkan</button>
+    </div>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function parsePolynomial(str) {
+      const terms = str.replace(/\s+/g, '').match(/[+-]?\d*x\^?\d*|[+-]?\d+/g);
+      const poly = {};
+      if (!terms) return poly;
+
+      terms.forEach(term => {
+        let coef = 0, exp = 0;
+        if (term.includes('x')) {
+          const parts = term.split('x');
+          coef = parts[0] === '' || parts[0] === '+' ? 1 :
+                 parts[0] === '-' ? -1 : parseInt(parts[0]);
+          exp = parts[1] ? parseInt(parts[1].replace('^', '')) : 1;
+        } else {
+          coef = parseInt(term);
+          exp = 0;
+        }
+        poly[exp] = (poly[exp] || 0) + coef;
+      });
+      return poly;
+    }
+
+    function formatPolynomial(poly) {
+      const terms = Object.keys(poly).map(Number).sort((a, b) => b - a);
+      let result = '';
+
+      terms.forEach(exp => {
+        const coef = poly[exp];
+        if (coef === 0) return;
+
+        let term = '';
+        if (coef > 0 && result !== '') term += '+';
+        if (coef !== 1 || exp === 0) term += coef;
+        else if (coef === -1 && exp !== 0) term += '-';
+
+        if (exp > 0) term += 'x';
+        if (exp > 1) term += '^' + exp;
+
+        result += term;
+      });
+
+      return result || '0';
+    }
+
+    function operasiPolinomial(mode) {
+      const poly1 = document.getElementById('poly1').value;
+      const poly2 = document.getElementById('poly2').value;
+
+      const p1 = parsePolynomial(poly1);
+      const p2 = parsePolynomial(poly2);
+
+      const resultPoly = {};
+
+      // Tambah koefisien dari poly1
+      for (let exp in p1) {
+        resultPoly[exp] = (resultPoly[exp] || 0) + p1[exp];
+      }
+
+      // Tambah atau kurangkan koefisien dari poly2
+      for (let exp in p2) {
+        const coef = mode === 'tambah' ? p2[exp] : -p2[exp];
+        resultPoly[exp] = (resultPoly[exp] || 0) + coef;
+      }
+
+      const hasil = formatPolynomial(resultPoly);
+      document.getElementById('result').innerText = "Hasil: " + hasil;
+    }
+  </script>
+
+</body>
+</html>
