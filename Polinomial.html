@@ -4,66 +4,81 @@
   <meta charset="UTF-8">
   <title>Penjumlahan & Pengurangan Polinomial</title>
   <style>
-    body {
+   body {
       font-family: Arial, sans-serif;
-      background-color: #000; /* Latar belakang hitam */
-      color: #ff0000; /* Teks berwarna merah */
+      background-color: #000;
+      color: #ff0000;
       margin: 0;
       padding: 20px;
       display: flex;
-      justify-content: center; /* Mengatur konten ke tengah secara horizontal */
-      align-items: center; /* Mengatur konten ke tengah secara vertikal */
-      height: 100vh; /* Mengatur tinggi body agar memenuhi viewport */
-      -webkit-user-select: none; /* Safari */
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      -webkit-user-select: none;
       user-select: none;
-            
     }
-    .container {
-        max-width: 1000px;
-        background: #1a1a1a;
-        padding: 50px;
-        border-radius: 20px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  }
 
-    h1, h3 {
-        text-align: center;
-        color: #ff0000;
+    .container {
+      max-width: 500px;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      font-size: 1.15em;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff0000;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 1.1em;
     }
 
     input[type="text"] {
-        width: calc(100% - 22px);
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ff0000;
-        border-radius: 5px;
-        background: #444;
-        color: #ffffff;
+      width: calc(100% - 26px);
+      padding: 12px;
+      margin: 12px 0;
+      border: 2px solid #ff0000;
+      border-radius: 5px;
+      background: #444;
+      color: #ffffff;
+      font-size: 1.1em;
     }
 
     .btn-group {
-        display: flex;
-        gap: 10px;
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
     }
 
     button {
-        flex: 1;
-        padding: 10px;
-        background-color: #ff0000;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+      flex: 1;
+      padding: 12px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-weight: bold;
     }
 
     button:hover {
-        background-color: #cc0000;
+      background-color: #cc0000;
     }
 
     .result {
-        margin-top: 20px;
-        font-size: 1.2em;
-        text-align: center;
+      margin-top: 25px;
+      font-size: 1.3em;
+      text-align: center;
+      padding: 12px;
+      background: #222;
+      border-radius: 5px;
+      border: 1px solid #ff0000;
     }
   </style>
 </head>
