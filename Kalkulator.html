@@ -1,193 +1,290 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Penjumlahan & Pengurangan Polinomial</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #000; /* Latar belakang hitam */
-      color: #ff0000; /* Teks berwarna merah */
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: center; /* Mengatur konten ke tengah secara horizontal */
-      align-items: center; /* Mengatur konten ke tengah secara vertikal */
-      height: 100vh; /* Mengatur tinggi body agar memenuhi viewport */
-      -webkit-user-select: none; /* Safari */
-      user-select: none;
-    }
-
-    .container {
-      max-width: 500px;
-      background: #1a1a1a;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-      font-size: 1.15em;
-    }
-
-    h1 {
-      text-align: center;
-      color: #ff0000;
-      font-size: 1.8em;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-size: 1.1em;
-    }
-
-    input[type="text"] {
-      width: calc(100% - 26px);
-      padding: 12px;
-      margin: 12px 0;
-      border: 2px solid #ff0000;
-      border-radius: 5px;
-      background: #444;
-      color: #ffffff;
-      font-size: 1.1em;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    button {
-      flex: 1;
-      padding: 12px;
-      background-color: #ff0000;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1.1em;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background-color: #cc0000;
-    }
-
-    .result {
-      margin-top: 25px;
-      font-size: 1.3em;
-      text-align: center;
-      padding: 12px;
-      background: #222;
-      border-radius: 5px;
-      border: 1px solid #ff0000;
-    }
-@media (max-width: 600px) {
-    .container {
-        max-width: 90%;
-        padding: 25px;
-    }
-    h1 {
-        font-size: 1.6em;
-    }
-    input[type="text"] {
-        font-size: 1.1em;
-    }
-    button {
-        font-size: 1.1em;
-        padding: 14px;
-    }
-    .result {
-        font-size: 1.3em;
-    }
-  }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            scroll-behavior: smooth;
+            font-family: "Poppins", sans-serif;
+        }
+        :root {
+            --bg-color: #111111;
+            --second-bg-color: #151515;
+            --text-color: white;
+            --main-color: #04fffb;
+        }
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 9%;
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        section {
+            min-height: 100vh;
+            padding: 10rem 9% 10rem;
+        }
+        .heading {
+            text-align: center;
+            font-size: 8rem;
+        }
+        .kalkulator{
+            background: var(--bg-color);
+            color: white;
+        }
+        .kalkulator h1{
+            margin-bottom: 5rem;
+            color: white;
+        }
+        .kalkulator-container{
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .kalkulator-box{
+            background-color: var(--main-color);
+            color: black;
+            height: 250px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+        .kalkulator-box:hover{
+            background: white;
+            color: var(--main-color);
+            transform: scale(1.03);
+        }
+        .kalkulator-box .kalkulator-info{
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            max-height: 200px;
+            justify-content: center;
+            align-items: baseline;
+            padding: 5em;
+        }
+        .kalkulator-info h4{
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .kalkulator-info p{
+            font-size: 1.6rem;
+            font-weight: 400;
+            max-height: 100px;
+            margin: auto;
+        }
+        @media (max-width: 991px) {
+            html {
+                font-size: 55%;
+            }
+            .kalkulator h1 {
+                margin-bottom: 3rem;
+            }
+            .kalkulator-container {
+                grid-template-columns: repeat(1, 1fr);
+            }    
+        }
+    </style>
 </head>
 <body>
+    <section class="kalkulator" id="kalkulator">
+        <h1 class="heading">Kalkulator</h1>
 
-  <div class="container">
-    <h1>Operasi Polinomial</h1>
+        <div class="kalkulator-container">
+            
+            <div class="kalkulator-box"onclick="window.location.href='Akar.html';">
+                <div class="kalkulator-info">
+                    <h4>Akar</h4>
+                    <p>Akar dalam matematika adalah kebalikan dari perpangkatan, digunakan untuk menemukan bilangan dasar dari suatu nilai kuadrat, kubik, atau lebih tinggi. Coba Kalkulator Akar  dengan klik di sini!</p>
+                </div>
+            </div>
 
-    <label for="poly1">Polinomial 1:</label><br>
-    <input type="text" id="poly1" placeholder="Contoh: 2x^2 + 3x + 1"><br>
+            <div class="kalkulator-box"onclick="window.location.href='Aljabar.html';">
+                <div class="kalkulator-info">
+                    <h4>Aljabar</h4>
+                    <p>Dalam matematika, aljabar membantu kita menyelesaikan persamaan dan memahami hubungan antara angka. Gunakan Kalkulator Aljabar dengan klik di sini!</p>
+                </div>
+            </div>
 
-    <label for="poly2">Polinomial 2:</label><br>
-    <input type="text" id="poly2" placeholder="Contoh: x^2 + 4"><br>
+            <div class="kalkulator-box"onclick="window.location.href='Bangun Datar.html';">
+                <div class="kalkulator-info">
+                    <h4>Bangun Datar</h4>
+                    <p>Bangun datar adalah bentuk dua dimensi yang memiliki luas dan keliling, seperti persegi, lingkaran, dan segitiga. Ini adalah Kalkulator Bangun Datar klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-    <div class="btn-group">
-      <button onclick="operasiPolinomial('tambah')">Jumlahkan</button>
-      <button onclick="operasiPolinomial('kurang')">Kurangkan</button>
-    </div>
+            <div class="kalkulator-box"onclick="window.location.href='Bangun Ruang.html';">
+                <div class="kalkulator-info">
+                    <h4>Bangun Ruang</h4>
+                    <p>Bangun ruang adalah bentuk tiga dimensi yang memiliki volume dan luas permukaan, seperti kubus, bola, dan tabung. Ini adalah Kalkulator Bangun Ruang klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-    <div class="result" id="result"></div>
-  </div>
+            <div class="kalkulator-box"onclick="window.location.href='Barisan Aritmatika.html';">
+                <div class="kalkulator-info">
+                    <h4>Barisan Aritmatika </h4>
+                    <p>Barisan aritmatika adalah sebuah urutan bilangan di mana setiap suku bertambah atau berkurang dengan selisih yang tetap. Ini adalah Kalkulator Barisan Aritmatika klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-  <script>
-    function parsePolynomial(str) {
-      const terms = str.replace(/\s+/g, '').match(/[+-]?\d*x\^?\d*|[+-]?\d+/g);
-      const poly = {};
-      if (!terms) return poly;
+            <div class="kalkulator-box"onclick="window.location.href='Barisan Geometri.html';">
+                <div class="kalkulator-info">
+                    <h4>Barisan Geometri</h4>
+                    <p>Barisan geometri adalah sebuah urutan bilangan di mana setiap suku diperoleh dengan mengalikan suku sebelumnya dengan rasio tetap. Ini adalah Kalkulator Barisan Geometri klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-      terms.forEach(term => {
-        let coef = 0, exp = 0;
-        if (term.includes('x')) {
-          const parts = term.split('x');
-          coef = parts[0] === '' || parts[0] === '+' ? 1 :
-                 parts[0] === '-' ? -1 : parseInt(parts[0]);
-          exp = parts[1] ? parseInt(parts[1].replace('^', '')) : 1;
-        } else {
-          coef = parseInt(term);
-          exp = 0;
-        }
-        poly[exp] = (poly[exp] || 0) + coef;
-      });
-      return poly;
-    }
+            <div class="kalkulator-box"onclick="window.location.href='Deret Aritmatika.html';">
+                <div class="kalkulator-info">
+                    <h4>Deret Aritmatika</h4>
+                    <p>Dalam matematika, deret aritmatika adalah hasil penjumlahan suku-suku dalam barisan aritmatika. Gunakan Kalkulator Deret Aritmatika dengan klik di sini!</p>
+                </div>
+            </div>
 
-    function formatPolynomial(poly) {
-      const terms = Object.keys(poly).map(Number).sort((a, b) => b - a);
-      let result = '';
+            <div class="kalkulator-box"onclick="window.location.href='Deret Geometri.html';">
+                <div class="kalkulator-info">
+                    <h4>Deret Geometri</h4>
+                    <p>Dalam matematika, deret geometri adalah hasil penjumlahan suku-suku dalam barisan geometri. Gunakan Kalkulator Deret Geometri dengan klik di sini!</p>
+                </div>
+            </div>
 
-      terms.forEach(exp => {
-        const coef = poly[exp];
-        if (coef === 0) return;
+            <div class="kalkulator-box"onclick="window.location.href='Eksponen.html';">
+                <div class="kalkulator-info">
+                    <h4>Eksponen</h4>
+                    <p>Butuh menghitung bilangan berpangkat dengan cepat? Kalkulator Eksponen siap membantu! Klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-        let term = '';
-        if (coef > 0 && result !== '') term += '+';
-        if (coef !== 1 || exp === 0) term += coef;
-        else if (coef === -1 && exp !== 0) term += '-';
+            <div class="kalkulator-box"onclick="window.location.href='Fungsi Kuadrat.html';">
+                <div class="kalkulator-info">
+                    <h4>Fungsi Kuadrat</h4>
+                    <p>Fungsi kuadrat adalah fungsi matematika berbentuk f(x) = ax² + bx + c yang membentuk grafik berupa parabola. Ini adalah Kalkulator Fungsi Kuadrat klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-        if (exp > 0) term += 'x';
-        if (exp > 1) term += '^' + exp;
+            <div class="kalkulator-box"onclick="window.location.href='Kalkulator Sederhana.html';">
+                <div class="kalkulator-info">
+                    <h4>Kalkulator Sederhana</h4>
+                    <p>Dalam kehidupan sehari-hari, kalkulator digunakan untuk menghitung angka dengan cepat dan akurat. Gunakan Kalkulator Sederhana dengan klik di sini!</p>
+                </div>
+            </div>
 
-        result += term;
-      });
+            <div class="kalkulator-box"onclick="window.location.href='Logaritma.html';">
+                <div class="kalkulator-info">
+                    <h4>Logaritma</h4>
+                    <p>Logaritma adalah operasi matematika yang merupakan kebalikan dari eksponen, digunakan untuk mencari pangkat suatu bilangan. Ini adalah Kalkulator Logaritma klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-      return result || '0';
-    }
+            <div class="kalkulator-box"onclick="window.location.href='Polinomial.html';">
+                <div class="kalkulator-info">
+                    <h4>Polinomial(+)(-)</h4>
+                    <p>Penjumlahan dan Pengurangan Polinomial adalah operasi matematika dasar yang melibatkan penggabungan atau pengurangan suku-suku dari dua atau lebih polinomial dengan pangkat yang sama.klik di bawah untuk mencobanya!</p>
+                </div>
+            </div>
 
-    function operasiPolinomial(mode) {
-      const poly1 = document.getElementById('poly1').value;
-      const poly2 = document.getElementById('poly2').value;
+            <div class="kalkulator-box"onclick="window.location.href='Pythagoras.html';">
+                <div class="kalkulator-info">
+                    <h4>Pythagoras</h4>
+                    <p>Teorema Pythagoras adalah prinsip matematika yang menyatakan bahwa dalam segitiga siku-siku, kuadrat panjang sisi miring sama dengan jumlah kuadrat panjang kedua sisi lainnya. Ini adalah Kalkulator Pythagoras klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-      const p1 = parsePolynomial(poly1);
-      const p2 = parsePolynomial(poly2);
+            <div class="kalkulator-box"onclick="window.location.href='Satuan Berat.html';">
+                <div class="kalkulator-info">
+                    <h4>Satuan Berat</h4>
+                    <p>Konversi satuan berat membantu mengubah berat atau massa suatu benda dari satu satuan ke satuan lainnya, seperti gram ke kilogram atau pon ke ons. Gunakan Kalkulator Konversi Berat dengan klik di sini!</p>
+                </div>
+            </div>
 
-      const resultPoly = {};
+            <div class="kalkulator-box"onclick="window.location.href='Satuan Kecepatan.html';">
+                <div class="kalkulator-info">
+                    <h4>Satuan Kecepatan</h4>
+                    <p>Konversi satuan kecepatan digunakan untuk mengubah kecepatan dari satu satuan ke satuan lainnya, seperti kilometer per jam ke meter per detik atau mil per jam. Gunakan Kalkulator Konversi Kecepatan dengan klik di sini!</p>
+                </div>
+            </div>
 
-      // Tambah koefisien dari poly1
-      for (let exp in p1) {
-        resultPoly[exp] = (resultPoly[exp] || 0) + p1[exp];
-      }
+            <div class="kalkulator-box"onclick="window.location.href='Satuan Luas.html';">
+                <div class="kalkulator-info">
+                    <h4>Satuan Luas</h4>
+                    <p>Konversi satuan luas digunakan untuk mengubah ukuran luas suatu bidang, seperti dari meter persegi ke hektar atau dari kaki persegi ke are. Gunakan Kalkulator Konversi Luas dengan klik di sini!</p>
+                </div>
+            </div>
 
-      // Tambah atau kurangkan koefisien dari poly2
-      for (let exp in p2) {
-        const coef = mode === 'tambah' ? p2[exp] : -p2[exp];
-        resultPoly[exp] = (resultPoly[exp] || 0) + coef;
-      }
+            <div class="kalkulator-box"onclick="window.location.href='Satuan Panjang.html';">
+                <div class="kalkulator-info">
+                    <h4>Satuan Panjang</h4>
+                    <p>Konversi satuan panjang digunakan untuk mengubah ukuran panjang dari satu satuan ke satuan lainnya, seperti meter ke kilometer atau inci ke sentimeter. Ini adalah Kalkulator Konversi Panjang klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
 
-      const hasil = formatPolynomial(resultPoly);
-      document.getElementById('result').innerText = "Hasil: " + hasil;
-    }
-  </script>
+            <div class="kalkulator-box"onclick="window.location.href='Satuan Suhu.html';">
+                <div class="kalkulator-info">
+                    <h4>Satuan Suhu</h4>
+                    <p>Konversi satuan suhu digunakan untuk mengubah suhu dari satu skala ke skala lainnya, seperti Celsius ke Fahrenheit atau Kelvin. Coba Kalkulator Konversi Suhu dengan klik di sini!</p>
+                </div>
+            </div>
 
+            <div class="kalkulator-box"onclick="window.location.href='Satuan Volume.html';">
+                <div class="kalkulator-info">
+                    <h4>Satuan Volume</h4>
+                    <p>Konversi satuan volume membantu mengubah ukuran ruang yang ditempati suatu benda, seperti liter ke mililiter atau meter kubik ke sentimeter kubik. Ini adalah Kalkulator Konversi Volume klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
+
+            <div class="kalkulator-box"onclick="window.location.href='Satuan Waktu.html';">
+                <div class="kalkulator-info">
+                    <h4>Satuan Waktu</h4>
+                    <p>Konversi satuan waktu digunakan untuk mengubah durasi antara satuan yang berbeda, seperti detik ke menit atau jam ke hari. Coba Kalkulator Konversi Waktu dengan klik di sini!</p>
+                </div>
+            </div>
+
+            <div class="kalkulator-box"onclick="window.location.href='Spldv.html';">
+                <div class="kalkulator-info">
+                    <h4>SPLDV</h4>
+                    <p>Dalam matematika, SPLDV digunakan untuk menemukan nilai dua variabel yang memenuhi dua persamaan linear sekaligus. Gunakan Kalkulator SPLDV dengan klik di sini!</p>
+                </div>
+            </div>
+
+            <div class="kalkulator-box"onclick="window.location.href='Spltv.html';">
+                <div class="kalkulator-info">
+                    <h4>SPLTV</h4>
+                    <p>Dalam matematika, SPLTV digunakan untuk mencari nilai tiga variabel yang memenuhi tiga persamaan linear sekaligus. Gunakan Kalkulator SPLTV dengan klik di sini!</p>
+                </div>
+            </div>
+
+            <div class="kalkulator-box"onclick="window.location.href='Trigonometri.html';">
+                <div class="kalkulator-info">
+                    <h4>Trigonometri</h4>
+                    <p>Trigonometri adalah cabang matematika yang mempelajari hubungan antara sudut dan panjang sisi dalam segitiga. Ini adalah Kalkulator Trigonometri klik di sini untuk mencobanya!</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
