@@ -1,193 +1,199 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Penjumlahan & Pengurangan Polinomial</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator Polinomial</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #000; /* Latar belakang hitam */
-      color: #ff0000; /* Teks berwarna merah */
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: center; /* Mengatur konten ke tengah secara horizontal */
-      align-items: center; /* Mengatur konten ke tengah secara vertikal */
-      height: 100vh; /* Mengatur tinggi body agar memenuhi viewport */
-      -webkit-user-select: none; /* Safari */
-      user-select: none;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        animation: fadeIn 1s ease-in-out;
     }
 
     .container {
-      max-width: 500px;
-      background: #1a1a1a;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-      font-size: 1.15em;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 25px;
+        max-width: 450px;
+        width: 100%;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        animation: slideUp 1s ease;
     }
 
-    h1 {
-      text-align: center;
-      color: #ff0000;
-      font-size: 1.8em;
-      margin-bottom: 20px;
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 600;
     }
 
     label {
-      font-size: 1.1em;
+        font-weight: 500;
+        margin-top: 10px;
+        display: block;
     }
 
-    input[type="text"] {
-      width: calc(100% - 26px);
-      padding: 12px;
-      margin: 12px 0;
-      border: 2px solid #ff0000;
-      border-radius: 5px;
-      background: #444;
-      color: #ffffff;
-      font-size: 1.1em;
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.02);
+        box-shadow: 0 0 10px rgba(0,255,200,0.6);
     }
 
     .btn-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 8px;
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
     }
 
     button {
-      flex: 1;
-      padding: 12px;
-      background-color: #ff0000;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1.1em;
-      font-weight: bold;
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #cc0000;
+        transform: scale(1.05);
+        box-shadow: 0 0 12px rgba(0,255,200,0.8);
+    }
+
+    .add-btn {
+        background: linear-gradient(45deg, #00b09b, #96c93d);
+    }
+
+    .sub-btn {
+        background: linear-gradient(45deg, #ff416c, #ff4b2b);
     }
 
     .result {
-      margin-top: 25px;
-      font-size: 1.3em;
-      text-align: center;
-      padding: 12px;
-      background: #222;
-      border-radius: 5px;
-      border: 1px solid #ff0000;
+        margin-top: 20px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        min-height: 40px;
+        animation: fadeIn 0.5s ease;
     }
-@media (max-width: 600px) {
-    .container {
-        max-width: 90%;
-        padding: 25px;
+
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
     }
-    h1 {
-        font-size: 1.6em;
+
+    @keyframes slideUp {
+        from {transform: translateY(20px); opacity: 0;}
+        to {transform: translateY(0); opacity: 1;}
     }
-    input[type="text"] {
-        font-size: 1.1em;
+
+    @media (max-width: 500px) {
+        .container {
+            padding: 20px;
+        }
+        h2 {
+            font-size: 1.2rem;
+        }
+        button {
+            font-size: 0.9rem;
+        }
     }
-    button {
-        font-size: 1.1em;
-        padding: 14px;
-    }
-    .result {
-        font-size: 1.3em;
-    }
-  }
-  </style>
+</style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Operasi Polinomial</h1>
-
-    <label for="poly1">Polinomial 1:</label><br>
-    <input type="text" id="poly1" placeholder="Contoh: 2x^2 + 3x + 1"><br>
-
-    <label for="poly2">Polinomial 2:</label><br>
-    <input type="text" id="poly2" placeholder="Contoh: x^2 + 4"><br>
-
+<div class="container">
+    <h2>Kalkulator Polinomial</h2>
+    <label for="poly1">Polinomial 1:</label>
+    <input type="text" id="poly1" placeholder="misal: 3x^2 + 2x + 1">
+    
+    <label for="poly2">Polinomial 2:</label>
+    <input type="text" id="poly2" placeholder="misal: x^2 + 5">
+    
     <div class="btn-group">
-      <button onclick="operasiPolinomial('tambah')">Jumlahkan</button>
-      <button onclick="operasiPolinomial('kurang')">Kurangkan</button>
+        <button class="add-btn" onclick="hitung('add')">Tambah</button>
+        <button class="sub-btn" onclick="hitung('sub')">Kurang</button>
     </div>
 
-    <div class="result" id="result"></div>
-  </div>
+    <div class="result" id="result">Hasil akan muncul di sini...</div>
+</div>
 
-  <script>
-    function parsePolynomial(str) {
-      const terms = str.replace(/\s+/g, '').match(/[+-]?\d*x\^?\d*|[+-]?\d+/g);
-      const poly = {};
-      if (!terms) return poly;
-
-      terms.forEach(term => {
-        let coef = 0, exp = 0;
+<script>
+function parsePolynomial(poly) {
+    poly = poly.replace(/\s+/g, '');
+    let terms = poly.match(/[+-]?\d*x?\^?\d*/g).filter(Boolean);
+    let obj = {};
+    terms.forEach(term => {
+        let coef = 0, pow = 0;
         if (term.includes('x')) {
-          const parts = term.split('x');
-          coef = parts[0] === '' || parts[0] === '+' ? 1 :
-                 parts[0] === '-' ? -1 : parseInt(parts[0]);
-          exp = parts[1] ? parseInt(parts[1].replace('^', '')) : 1;
+            let parts = term.split('x');
+            coef = parts[0] === '' || parts[0] === '+' ? 1 : (parts[0] === '-' ? -1 : parseFloat(parts[0]));
+            pow = parts[1] ? parseInt(parts[1].replace('^','')) : 1;
         } else {
-          coef = parseInt(term);
-          exp = 0;
+            coef = parseFloat(term);
+            pow = 0;
         }
-        poly[exp] = (poly[exp] || 0) + coef;
-      });
-      return poly;
-    }
+        obj[pow] = (obj[pow] || 0) + coef;
+    });
+    return obj;
+}
 
-    function formatPolynomial(poly) {
-      const terms = Object.keys(poly).map(Number).sort((a, b) => b - a);
-      let result = '';
+function polynomialToString(polyObj) {
+    let terms = Object.keys(polyObj).sort((a,b) => b-a).map(pow => {
+        let coef = polyObj[pow];
+        if (coef === 0) return '';
+        let sign = coef > 0 ? '+' : '';
+        if (pow == 0) return `${sign}${coef}`;
+        if (pow == 1) return `${sign}${coef}x`;
+        return `${sign}${coef}x^${pow}`;
+    }).filter(Boolean);
+    let result = terms.join(' ');
+    return result.startsWith('+') ? result.slice(1) : result;
+}
 
-      terms.forEach(exp => {
-        const coef = poly[exp];
-        if (coef === 0) return;
+function hitung(op) {
+    let p1 = parsePolynomial(document.getElementById('poly1').value);
+    let p2 = parsePolynomial(document.getElementById('poly2').value);
+    let result = {};
 
-        let term = '';
-        if (coef > 0 && result !== '') term += '+';
-        if (coef !== 1 || exp === 0) term += coef;
-        else if (coef === -1 && exp !== 0) term += '-';
+    let keys = new Set([...Object.keys(p1), ...Object.keys(p2)]);
+    keys.forEach(k => {
+        let a = p1[k] || 0;
+        let b = p2[k] || 0;
+        result[k] = (op === 'add') ? a + b : a - b;
+    });
 
-        if (exp > 0) term += 'x';
-        if (exp > 1) term += '^' + exp;
-
-        result += term;
-      });
-
-      return result || '0';
-    }
-
-    function operasiPolinomial(mode) {
-      const poly1 = document.getElementById('poly1').value;
-      const poly2 = document.getElementById('poly2').value;
-
-      const p1 = parsePolynomial(poly1);
-      const p2 = parsePolynomial(poly2);
-
-      const resultPoly = {};
-
-      // Tambah koefisien dari poly1
-      for (let exp in p1) {
-        resultPoly[exp] = (resultPoly[exp] || 0) + p1[exp];
-      }
-
-      // Tambah atau kurangkan koefisien dari poly2
-      for (let exp in p2) {
-        const coef = mode === 'tambah' ? p2[exp] : -p2[exp];
-        resultPoly[exp] = (resultPoly[exp] || 0) + coef;
-      }
-
-      const hasil = formatPolynomial(resultPoly);
-      document.getElementById('result').innerText = "Hasil: " + hasil;
-    }
-  </script>
+    document.getElementById('result').innerText = polynomialToString(result) || '0';
+}
+</script>
 
 </body>
 </html>
