@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jam</title>
+    <title>Grafik</title>
     <style>
         * {
             margin: 0;
@@ -51,21 +51,21 @@
             text-align: center;
             font-size: 8rem;
         }
-        .jam{
+        .grafik{
             background: var(--bg-color);
             color: white;
         }
-        .jam h1{
+        .grafik h1{
             margin-bottom: 5rem;
             color: white;
         }
-        .jam-container{
+        .grafik-container{
             display: grid;
             grid-template-columns: repeat(2,1fr);
             align-items: center;
             gap: 2.5rem;
         }
-        .jam-box{
+        .grafik-box{
             background-color: var(--main-color);
             color: black;
             height: 250px;
@@ -73,12 +73,12 @@
             cursor: pointer;
             transition: 0.3s ease-in-out;
         }
-        .jam-box:hover{
+        .grafik-box:hover{
             background: white;
             color: var(--main-color);
             transform: scale(1.03);
         }
-        .jam-box .jam-info{
+        .grafik-box .grafik-info{
             display: flex;
             flex-direction: column;
             text-align: left;
@@ -87,12 +87,12 @@
             align-items: baseline;
             padding: 5em;
         }
-        .jam-info h4{
+        .grafik-info h4{
             font-size: 2.5rem;
             font-weight: 500;
             margin-bottom: 1rem;
         }
-        .jam-info p{
+        .grafik-info p{
             font-size: 1.6rem;
             font-weight: 400;
             max-height: 100px;
@@ -102,23 +102,23 @@
             html {
                 font-size: 55%;
             }
-            .jam h1 {
+            .grafik h1 {
                 margin-bottom: 3rem;
             }
-            .jam-container {
+            .grafik-container {
                 grid-template-columns: repeat(1, 1fr);
             }    
         }
     </style>
 </head>
 <body>
-    <section class="jam" id="jam">
-        <h1 class="heading">Jam</h1>
+    <section class="grafik" id="grafik">
+        <h1 class="heading">Grafik</h1>
 
-        <div class="jam-container">
+        <div class="grafik-container">
             
-            <div class="jam-box"onclick="window.location.href='Grafik Polinomial.html';">
-                <div class="jam-info">
+            <div class="grafik-box"onclick="window.location.href='Grafik Polinomial.html';">
+                <div class="grafik-info">
                     <h4>Grafik Polinomial</h4>
                     <p>Grafik Polinomial adalah representasi visual dari persamaan polinomial dalam bidang koordinat, yang membentuk kurva dengan pola naik turun sesuai pangkat dan koefisien sukunya. Klik di bawah untuk mencobanya!</p>
                 </div>
