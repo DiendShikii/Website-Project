@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grafik Polinomial Interaktif</title>
+
+  <!-- Chart.js & Zoom Plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    :root {
+      --bg1: #0f2027;
+      --bg2: #203a43;
+      --bg3: #2c5364;
+      --card: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.12);
+      --accent: #00ffd5;
+      --accent2: #ff6b6b;
+      --text: #f6f7f9;
+      --muted: #b8c1cc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 360px 1fr;
+    }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      animation: pop .5s ease both;
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(10px) scale(.98); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .panel { padding: 18px 18px 10px; }
+
+    .title {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title h1 {
+      font-size: 1.2rem;
+      margin: 0;
+      letter-spacing: .3px;
+    }
+
+    .hint { font-size: .85rem; color: var(--muted); }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .row.wrap { flex-wrap: wrap; }
+
+    label { font-size: .9rem; }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="color"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      outline: none;
+      transition: .2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      box-shadow: 0 0 0 3px rgba(0,255,213,.15);
+      border-color: rgba(0,255,213,.6);
+      transform: translateY(-1px);
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      color: #061018;
+      font-weight: 600;
+      transition: .2s;
+      box-shadow: 0 8px 20px rgba(0,0,0,.25);
+    }
+
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .btn-primary { background: linear-gradient(45deg, #00e5ff, #00ffd5); }
+    .btn-danger  { background: linear-gradient(45deg, #ff7a7a, #ff5252); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn:hover { transform: translateY(-1px); filter: saturate(1.15); }
+
+    .series-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--card-border);
+      font-size: .85rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .tag button {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .canvas-wrap { padding: 14px 18px 18px; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--card-border);
+      padding: 12px 18px 16px;
+    }
+
+    .toolbar-left,
+    .toolbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--card-border);
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    .footer-note {
+      padding: 0 18px 16px;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- Control Panel -->
+    <div class="card">
+      <div class="title">
+        <h1>🎯 Pengaturan & Kurva</h1>
+      </div>
+
+      <div class="panel">
+        <div class="hint">
+          Masukkan polinomial. Contoh:
+          <code>3x^3 - 2x + 1</code> atau <code>-x^2 + 4x - 5</code>
+        </div>
+
+        <div class="row">
+          <input id="expr" type="text" placeholder="Polinomial, misal: 2x^2 + 3x - 1" />
+        </div>
+
+        <div class="row">
+          <label style="width:40%">Warna</label>
+          <input id="color" type="color" value="#00ffd5" style="width:60%"/>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" id="addBtn">+ Tambah Kurva</button>
+          <button class="btn btn-outline" id="clearBtn">Hapus Semua</button>
+        </div>
+
+        <div class="hint" style="margin-top:8px">Kurva aktif:</div>
+        <div class="series-list" id="seriesList"></div>
+
+        <hr style="border:none; border-top:1px solid var(--card-border); margin:14px 0">
+
+        <div class="row wrap">
+          <div style="flex:1; min-width:120px">
+            <label>Domain X min</label>
+            <input id="xmin" type="number" value="-10" step="1">
+          </div>
+          <div style="flex:1; min-width:120px">
+            <label>Domain X max</label>
+            <input id="xmax" type="number" value="10" step="1">
+          </div>
+          <div style="flex:1; min-width:160px">
+            <label>Resolusi (step)</label>
+            <select id="step">
+              <option value="0.1">0.1 (halus)</option>
+              <option value="0.2">0.2</option>
+              <option value="0.5" selected>0.5</option>
+              <option value="1">1 (cepat)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" id="renderBtn">Gambar / Update</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Area -->
+    <div class="card">
+      <div class="title">
+        <h1>📈 Grafik Polinomial</h1>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="chart" height="380"></canvas>
+      </div>
+
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <button class="btn btn-outline" id="resetZoom">Reset Zoom</button>
+          <span class="badge">🔍 Zoom: scroll / pinch</span>
+          <span class="badge">✋ Pan: drag</span>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-danger" id="fitBtn">Auto Fit</button>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        Catatan: dukung operator <code>+</code>, <code>-</code>, <code>x</code> (atau <code>*</code>), dan pangkat <code>^</code>. Variabel: <strong>x</strong>.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ===================== Utilities: Parsing & Evaluasi ===================== */
+    function parsePolynomial(str) {
+      // Normalisasi
+      str = (str || '')
+        .toString()
+        .replace(/\s+/g, '')
+        .replace(/X/g, 'x')
+        .replace(/\*/g, 'x')  // izinkan "2*x" -> "2x"
+        .replace(/−/g, '-');
+  
+      // Pecah jadi term
+      const terms = str.match(/[+-]?\d*\.?\d*x\^\d+|[+-]?\d*\.?\d*x|[+-]?\d*\.?\d+/g);
+      if (!terms) return {};
+  
+      const poly = {};
+      for (const t of terms) {
+        let coef = 0, exp = 0;
+  
+        if (t.includes('x')) {
+          const [c, rest] = t.split('x');
+          coef = (c === '' || c === '+') ? 1 : (c === '-' ? -1 : parseFloat(c));
+          exp = (rest && rest.startsWith('^')) ? parseInt(rest.slice(1)) : 1;
+        } else {
+          coef = parseFloat(t);
+          exp = 0;
+        }
+  
+        if (!Number.isFinite(coef) || !Number.isFinite(exp)) continue;
+        poly[exp] = (poly[exp] || 0) + coef;
+      }
+  
+      // Hapus koef nol kecil
+      for (const k in poly) {
+        if (Math.abs(poly[k]) < 1e-12) delete poly[k];
+      }
+  
+      return poly;
+    }
+  
+    function evalPoly(polyObj, x) {
+      let y = 0;
+      for (const k in polyObj) {
+        const e = parseInt(k, 10);
+        y += polyObj[k] * Math.pow(x, e);
+      }
+      return y;
+    }
+  
+    function formatPoly(poly) {
+      const keys = Object.keys(poly).map(Number).sort((a, b) => b - a);
+      if (keys.length === 0) return '0';
+  
+      const parts = [];
+      for (const e of keys) {
+        const c = poly[e];
+        if (Math.abs(c) < 1e-12) continue;
+  
+        const sign = c >= 0 ? '+' : '-';
+        const abs = Math.abs(c);
+  
+        if (e === 0) {
+          parts.push(`${sign}${abs}`);
+        } else if (e === 1) {
+          parts.push(`${sign}${abs === 1 ? '' : '{' + trimFloat(abs) + '}'}x`);
+        } else {
+          parts.push(`${sign}${abs === 1 ? '' : '{' + trimFloat(abs) + '}'}x^${e}`);
+        }
+      }
+  
+      const s = parts.join(' ').replace(/^\+/, ''); // hapus plus awal
+      return s || '0';
+    }
+  
+    function trimFloat(n) {
+      return (Math.abs(n - Math.round(n)) < 1e-10)
+        ? Math.round(n)
+        : Number(n.toFixed(6));
+    }
+  
+    /* ===================== DataSet Manager ===================== */
+    const series = []; // { expr, poly, color, id }
+  
+    function addSeries(expr, color) {
+      const poly = parsePolynomial(expr);
+      const id = crypto.randomUUID
+        ? crypto.randomUUID()
+        : (Date.now() + '_' + Math.random());
+  
+      series.push({ expr, poly, color, id });
+      renderSeriesChips();
+    }
+  
+    function removeSeries(id) {
+      const idx = series.findIndex(s => s.id === id);
+      if (idx > -1) {
+        series.splice(idx, 1);
+        renderSeriesChips();
+        drawChart();
+      }
+    }
+  
+    function renderSeriesChips() {
+      const box = document.getElementById('seriesList');
+      box.innerHTML = '';
+  
+      if (series.length === 0) {
+        const span = document.createElement('span');
+        span.className = 'hint';
+        span.textContent = 'Belum ada kurva. Tambahkan di atas.';
+        box.appendChild(span);
+        return;
+      }
+  
+      for (const s of series) {
+        const chip = document.createElement('div');
+        chip.className = 'tag';
+  
+        const dot = document.createElement('span');
+        dot.className = 'dot';
+        dot.style.background = s.color;
+        chip.appendChild(dot);
+  
+        const txt = document.createElement('span');
+        txt.textContent = s.expr;
+        chip.appendChild(txt);
+  
+        const del = document.createElement('button');
+        del.title = 'Hapus';
+        del.textContent = '×';
+        del.onclick = () => removeSeries(s.id);
+        chip.appendChild(del);
+  
+        box.appendChild(chip);
+      }
+    }
+  
+    /* ===================== Chart.js Setup ===================== */
+    let chart;
+  
+    function initChart() {
+      const ctx = document.getElementById('chart').getContext('2d');
+  
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: { labels: [], datasets: [] },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'nearest', intersect: false },
+          scales: {
+            x: {
+              title: { display: true, text: 'x' },
+              grid: { color: 'rgba(255,255,255,0.08)' },
+              ticks: { color: '#dfe7ef' }
+            },
+            y: {
+              title: { display: true, text: 'y' },
+              grid: { color: 'rgba(255,255,255,0.08)' },
+              ticks: { color: '#dfe7ef' }
+            }
+          },
+          plugins: {
+            legend: { labels: { color: '#f0f3f7' } },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `y = ${trimFloat(ctx.parsed.y)}`
+              }
+            },
+            zoom: {
+              pan: { enabled: true, mode: 'xy' },
+              zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'xy' }
+            }
+          },
+          elements: {
+            point: { radius: 0 },
+            line: { tension: 0 }
+          }
+        }
+      });
+    }
+  
+    /* ===================== Drawing ===================== */
+    function buildX(min, max, step) {
+      const xs = [];
+      for (let x = min; x <= max + 1e-12; x += step) {
+        xs.push(Number(x.toFixed(6)));
+      }
+      return xs;
+    }
+  
+    function drawChart() {
+      if (!chart) return;
+  
+      const xmin = parseFloat(document.getElementById('xmin').value);
+      const xmax = parseFloat(document.getElementById('xmax').value);
+      let step = parseFloat(document.getElementById('step').value);
+  
+      if (!(xmax > xmin)) return;
+  
+      // Jaga agar tidak terlalu berat
+      const maxPoints = 4000;
+      const estPoints = Math.ceil((xmax - xmin) / step) + 1;
+      if (estPoints > maxPoints) {
+        step = (xmax - xmin) / maxPoints;
+      }
+  
+      const xs = buildX(xmin, xmax, step);
+      const datasets = series.map(s => {
+        const ys = xs.map(x => evalPoly(s.poly, x));
+        return {
+          label: s.expr,
+          data: xs.map((x, i) => ({ x, y: ys[i] })),
+          borderColor: s.color,
+          borderWidth: 2,
+          fill: false
+        };
+      });
+  
+      chart.data.labels = xs;
+      chart.data.datasets = datasets;
+      chart.update('none');
+    }
+  
+    function autoFit() {
+      if (series.length === 0) return;
+  
+      // Cari domain terbaik
+      const xmin = parseFloat(document.getElementById('xmin').value);
+      const xmax = parseFloat(document.getElementById('xmax').value);
+      const step = Math.max((xmax - xmin) / 500, 0.1);
+  
+      const xs = buildX(xmin, xmax, step);
+      let ymin = Infinity, ymax = -Infinity;
+  
+      for (const s of series) {
+        for (const x of xs) {
+          const y = evalPoly(s.poly, x);
+          if (Number.isFinite(y)) {
+            if (y < ymin) ymin = y;
+            if (y > ymax) ymax = y;
+          }
+        }
+      }
+  
+      if (!Number.isFinite(ymin) || !Number.isFinite(ymax)) return;
+  
+      // Padding
+      const pad = (ymax - ymin) || 1;
+      chart.options.scales.y.min = ymin - pad * 0.1;
+      chart.options.scales.y.max = ymax + pad * 0.1;
+      chart.update('none');
+    }
+  
+    /* ===================== Events ===================== */
+    document.getElementById('addBtn').addEventListener('click', () => {
+      const expr = document.getElementById('expr').value.trim();
+      if (!expr) {
+        alert('Masukkan polinomial terlebih dahulu.');
+        return;
+      }
+  
+      const poly = parsePolynomial(expr);
+      if (Object.keys(poly).length === 0) {
+        alert('Ekspresi tidak dikenali. Coba contoh: 2x^2+3x-1');
+        return;
+      }
+  
+      const color = document.getElementById('color').value;
+      addSeries(expr, color);
+      drawChart();
+    });
+  
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      series.splice(0, series.length);
+      renderSeriesChips();
+      drawChart();
+    });
+  
+    document.getElementById('renderBtn').addEventListener('click', drawChart);
+  
+    document.getElementById('resetZoom').addEventListener('click', () => {
+      chart.resetZoom();
+      chart.options.scales.y.min = undefined;
+      chart.options.scales.y.max = undefined;
+      chart.update('none');
+    });
+  
+    document.getElementById('fitBtn').addEventListener('click', () => {
+      chart.resetZoom();
+      autoFit();
+    });
+  
+    /* ===================== Init ===================== */
+    initChart();
+    renderSeriesChips();
+    drawChart();
+  </script>  
+</body>
+</html>

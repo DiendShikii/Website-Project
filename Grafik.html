@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: none;
+            outline: none;
+            scroll-behavior: smooth;
+            font-family: "Poppins", sans-serif;
+        }
+        :root {
+            --bg-color: #111111;
+            --second-bg-color: #151515;
+            --text-color: white;
+            --main-color: #04fffb;
+        }
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+        }
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 9%;
+            background: rgba(0, 0, 0, 0.6);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        section {
+            min-height: 100vh;
+            padding: 10rem 9% 10rem;
+        }
+        .heading {
+            text-align: center;
+            font-size: 8rem;
+        }
+        .jam{
+            background: var(--bg-color);
+            color: white;
+        }
+        .jam h1{
+            margin-bottom: 5rem;
+            color: white;
+        }
+        .jam-container{
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .jam-box{
+            background-color: var(--main-color);
+            color: black;
+            height: 250px;
+            border-radius: 3rem;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+        .jam-box:hover{
+            background: white;
+            color: var(--main-color);
+            transform: scale(1.03);
+        }
+        .jam-box .jam-info{
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            max-height: 200px;
+            justify-content: center;
+            align-items: baseline;
+            padding: 5em;
+        }
+        .jam-info h4{
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .jam-info p{
+            font-size: 1.6rem;
+            font-weight: 400;
+            max-height: 100px;
+            margin: auto;
+        }
+        @media (max-width: 991px) {
+            html {
+                font-size: 55%;
+            }
+            .jam h1 {
+                margin-bottom: 3rem;
+            }
+            .jam-container {
+                grid-template-columns: repeat(1, 1fr);
+            }    
+        }
+    </style>
+</head>
+<body>
+    <section class="jam" id="jam">
+        <h1 class="heading">Jam</h1>
+
+        <div class="jam-container">
+            
+            <div class="jam-box"onclick="window.location.href='Grafik Polinomial.html';">
+                <div class="jam-info">
+                    <h4>Grafik Polinomial</h4>
+                    <p>Grafik Polinomial adalah representasi visual dari persamaan polinomial dalam bidang koordinat, yang membentuk kurva dengan pola naik turun sesuai pangkat dan koefisien sukunya. Klik di bawah untuk mencobanya!</p>
+                </div>
+            </div>
+    </section>
+</body>
+</html>
