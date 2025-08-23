@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator Polinomial</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 25px;
+        max-width: 450px;
+        width: 100%;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        animation: slideUp 1s ease;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    label {
+        font-weight: 500;
+        margin-top: 10px;
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.02);
+        box-shadow: 0 0 10px rgba(0,255,200,0.6);
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 12px rgba(0,255,200,0.8);
+    }
+
+    .mul-btn {
+        background: linear-gradient(45deg, #00b09b, #96c93d);
+    }
+
+    .div-btn {
+        background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    }
+
+    .result {
+        margin-top: 20px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        min-height: 40px;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    @keyframes slideUp {
+        from {transform: translateY(20px); opacity: 0;}
+        to {transform: translateY(0); opacity: 1;}
+    }
+
+    @media (max-width: 500px) {
+        .container {
+            padding: 20px;
+        }
+        h2 {
+            font-size: 1.2rem;
+        }
+        button {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kalkulator Polinomial</h2>
+    <label for="poly1">Polinomial 1:</label>
+    <input type="text" id="poly1" placeholder="misal: 3x^2 + 2x + 1">
+    
+    <label for="poly2">Polinomial 2:</label>
+    <input type="text" id="poly2" placeholder="misal: x + 1">
+    
+    <div class="btn-group">
+        <button class="mul-btn" onclick="hitung('mul')">Perkalian</button>
+        <button class="div-btn" onclick="hitung('div')">Pembagian</button>
+    </div>
+
+    <div class="result" id="result">Hasil akan muncul di sini...</div>
+</div>
+
+<script>
+    function parsePolynomial(poly) {
+        poly = poly.replace(/\s+/g, '');
+        let terms = poly.match(/[+-]?\d*x?\^?\d*/g).filter(Boolean);
+        let obj = {};
+        terms.forEach(term => {
+            let coef=0, pow=0;
+            if (term.includes('x')) {
+                let parts = term.split('x');
+                coef = parts[0]===''||parts[0]==='+'?1:(parts[0]==='-'?-1:parseFloat(parts[0]));
+                pow = parts[1]?parseInt(parts[1].replace('^','')):1;
+            } else {coef=parseFloat(term); pow=0;}
+            obj[pow]=(obj[pow]||0)+coef;
+        });
+        return obj;
+    }
+    
+    function polynomialToString(polyObj) {
+        let terms=Object.keys(polyObj).sort((a,b)=>b-a).map(pow=>{
+            let coef=polyObj[pow]; if(coef===0) return '';
+            let sign=coef>0?'+':'';
+            if(pow==0) return `${sign}${coef}`;
+            if(pow==1) return `${sign}${coef}x`;
+            return `${sign}${coef}x^${pow}`;
+        }).filter(Boolean);
+        let result=terms.join(' ');
+        return result.startsWith('+')?result.slice(1):result||'0';
+    }
+    
+    function multiply(p1,p2){
+        let result={};
+        for(let pow1 in p1){for(let pow2 in p2){
+            let newPow=parseInt(pow1)+parseInt(pow2);
+            let newCoef=(p1[pow1]||0)*(p2[pow2]||0);
+            result[newPow]=(result[newPow]||0)+newCoef;
+        }}
+        return result;
+    }
+    
+    function divide(p1,p2){
+        let result={};
+        let dividend={...p1};
+        let divisor={...p2};
+    
+        let highestPowDivisor=Math.max(...Object.keys(divisor));
+        let coefDivisor=divisor[highestPowDivisor];
+    
+        while(Object.keys(dividend).length>0){
+            let highestPowDividend=Math.max(...Object.keys(dividend));
+            if(highestPowDividend<highestPowDivisor) break;
+    
+            let coefDividend=dividend[highestPowDividend];
+            let powDiff=highestPowDividend-highestPowDivisor;
+            let coefQuot=coefDividend/coefDivisor;
+    
+            result[powDiff]=(result[powDiff]||0)+coefQuot;
+    
+            for(let pow in divisor){
+                let newPow=parseInt(pow)+powDiff;
+                dividend[newPow]=(dividend[newPow]||0)-coefQuot*divisor[pow];
+                if(Math.abs(dividend[newPow])<1e-10) delete dividend[newPow];
+            }
+        }
+        return {quotient:result, remainder:dividend};
+    }
+    
+    function hitung(op){
+        let p1=parsePolynomial(document.getElementById('poly1').value);
+        let p2=parsePolynomial(document.getElementById('poly2').value);
+        let output="";
+    
+        if(op==='mul'){
+            let result=multiply(p1,p2);
+            output="Hasil Perkalian: "+polynomialToString(result);
+        } else {
+            let {quotient,remainder}=divide(p1,p2);
+            output="Hasil Bagi: "+polynomialToString(quotient);
+            if(Object.keys(remainder).length>0){
+                output+="\nSisa: "+polynomialToString(remainder);
+            }
+        }
+        document.getElementById('result').innerText=output;
+    }
+    </script>
+
+</body>
+</html>
