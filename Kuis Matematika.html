@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis#1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #e0f2f1, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .Kuis-container {
+    background: #fff;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  h1 {
+    font-size: 30px;
+    color: #00796b;
+    margin-bottom: 20px;
+  }
+
+  .start-box,
+  .question-box {
+    background: #fefefe;
+    border-radius: 20px;
+    padding: 30px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .start-box:hover,
+  .question-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  }
+
+  .question-text,
+  .start-box label {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+  }
+
+  input[type="text"]:focus {
+    border-color: #00796b;
+    box-shadow: 0 0 8px rgba(0,121,107,0.3);
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .option-btn,
+  .start-btn,
+  .next-btn,
+  .retry-btn {
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .option-btn {
+    background: #e0f2f1;
+    color: #00796b;
+  }
+
+  .option-btn:hover {
+    background: linear-gradient(90deg, #00796b, #004d40);
+    color: #fff;
+  }
+
+  .option-btn.selected {
+    background: #004d40;
+    color: #fff;
+  }
+
+  .start-btn,
+  .next-btn,
+  .retry-btn {
+    background: linear-gradient(90deg, #00796b, #004d40);
+    color: #fff;
+    width: 50%;
+    margin: 20px auto 0 auto;
+  }
+
+  .start-btn:hover,
+  .next-btn:hover,
+  .retry-btn:hover {
+    background: linear-gradient(90deg, #004d40, #00796b);
+  }
+
+  .result {
+    font-size: 22px;
+    color: #00796b;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+
+  #timer {
+    font-size: 18px;
+    color: #00796b;
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 600px) {
+    .Kuis-container { padding: 25px; }
+    h1 { font-size: 26px; }
+    .question-text, .start-box label { font-size: 18px; }
+    .option-btn, .start-btn, .next-btn, .retry-btn { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+  <div class="Kuis-container" id="KuisContainer">
+    <h1>Kuis #1</h1>
+    <div id="Kuis"></div>
+  </div>
+
+<script>
+  const KuisContainer = document.getElementById('Kuis');
+  const totalQuestions = 20;
+  const operations = ['+', '-', '*', '/'];
+
+  let questions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let playerName = '';
+  let startTime, timerInterval;
+  let selectedAnswer = null;
+
+  function generateQuestion() {
+    let num1 = Math.floor(Math.random()*100)+1;
+    let num2 = Math.floor(Math.random()*20)+1;
+    let op = operations[Math.floor(Math.random()*operations.length)];
+    if(op === '/') num1 = num1 * num2;
+    let answer = Math.round(eval(`${num1} ${op} ${num2}`)*100)/100;
+    let options = [answer];
+    while(options.length < 4){
+      let wrong = Math.round((answer + Math.floor(Math.random()*20-10))*100)/100;
+      if(!options.includes(wrong)) options.push(wrong);
+    }
+    options.sort(()=>Math.random()-0.5);
+    return { question:`${num1} ${op} ${num2} = ?`, answer: answer, options: options, userAnswer: null };
+  }
+
+  function showStartScreen() {
+    KuisContainer.innerHTML = `
+      <div class="start-box">
+        <label>Masukkan Nama Anda:</label>
+        <input type="text" id="nameInput" placeholder="Nama Anda...">
+        <button class="start-btn" onclick="startKuis()">Mulai Kuis</button>
+      </div>
+    `;
+  }
+
+  function startKuis() {
+    playerName = document.getElementById('nameInput').value.trim();
+    if(playerName === '') { alert('Silakan isi nama Anda terlebih dahulu.'); return; }
+
+    for(let i=0; i<totalQuestions; i++) questions.push(generateQuestion());
+    currentIndex = 0;
+    score = 0;
+    selectedAnswer = null;
+    startTime = new Date();
+    startTimer();
+    showQuestion();
+  }
+
+  function startTimer() {
+    const timerDiv = document.createElement('div');
+    timerDiv.id = 'timer';
+    KuisContainer.prepend(timerDiv);
+    timerInterval = setInterval(()=>{
+      const now = new Date();
+      const diff = Math.floor((now-startTime)/1000);
+      const minutes = String(Math.floor(diff/60)).padStart(2,'0');
+      const seconds = String(diff%60).padStart(2,'0');
+      timerDiv.textContent = `Waktu: ${minutes}:${seconds}`;
+    },1000);
+  }
+
+  function showQuestion() {
+    const q = questions[currentIndex];
+    selectedAnswer = q.userAnswer !== null ? q.userAnswer : null;
+
+    KuisContainer.innerHTML = `
+      <div id="timer"></div>
+      <div class="question-box">
+        <div class="question-text">${currentIndex+1}. ${q.question}</div>
+        <div class="options">
+          ${q.options.map(opt => `
+            <button class="option-btn ${selectedAnswer===opt?'selected':''}" onclick="selectAnswer(${opt})">${opt}</button>
+          `).join('')}
+        </div>
+      </div>
+      <button class="next-btn" onclick="nextQuestion()">Next</button>
+    `;
+    if(!timerInterval) startTimer();
+  }
+
+  function selectAnswer(opt){
+    selectedAnswer = opt;
+    questions[currentIndex].userAnswer = opt;
+    document.querySelectorAll('.option-btn').forEach(btn=>{
+      btn.classList.remove('selected');
+      if(Number(btn.textContent) === opt) btn.classList.add('selected');
+    });
+  }
+
+  function nextQuestion(){
+    if(selectedAnswer === questions[currentIndex].answer) score++;
+    currentIndex++;
+    if(currentIndex < totalQuestions) showQuestion();
+    else showResult();
+  }
+
+  function showResult(){
+    clearInterval(timerInterval);
+    timerInterval = null;
+    const now = new Date();
+    const diff = Math.floor((now-startTime)/1000);
+    const minutes = String(Math.floor(diff/60)).padStart(2,'0');
+    const seconds = String(diff%60).padStart(2,'0');
+
+    KuisContainer.innerHTML = `
+      <div class="result">
+        <p>Nama: <strong>${playerName}</strong></p>
+        <p>Skor Anda: <strong>${score} / ${totalQuestions}</strong></p>
+        <p>Waktu menyelesaikan Kuis: <strong>${minutes}:${seconds}</strong></p>
+        <button class="retry-btn" onclick="restartKuis()">Ulangi Kuis</button>
+      </div>
+    `;
+  }
+
+  function restartKuis(){
+    questions = [];
+    currentIndex = 0;
+    score = 0;
+    selectedAnswer = null;
+    clearInterval(timerInterval);
+    timerInterval = null;
+    showStartScreen();
+  }
+
+  showStartScreen();
+</script>
+</body>
+</html>
