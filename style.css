@@ -291,21 +291,21 @@ span {
     background-color: var(--bg-color);
     width: 50px;
 }
-.services{
+.details{
     background: var(--bg-color);
     color: white;
 }
-.services h2{
+.details h2{
     margin-bottom: 5rem;
     color: white;
 }
-.services-container{
+.details-container{
     display: grid;
     grid-template-columns: repeat(2,1fr);
     align-items: center;
     gap: 2.5rem;
 }
-.service-box{
+.details-box{
     background-color: var(--main-color);
     color: black;
     height: 250px;
@@ -313,12 +313,12 @@ span {
     cursor: pointer;
     transition: 0.3s ease-in-out;
 }
-.service-box:hover{
+.details-box:hover{
     background: white;
     color: var(--main-color);
     transform: scale(1.03);
 }
-.service-box .service-info{
+.details-box .details-info{
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -327,12 +327,12 @@ span {
     align-items: baseline;
     padding: 5em;
 }
-.service-info h4{
+.details-info h4{
     font-size: 2.5rem;
     font-weight: 500;
     margin-bottom: 1rem;
 }
-.service-info p{
+.details-info p{
     font-size: 1.6rem;
     font-weight: 400;
     max-height: 100px;
@@ -442,7 +442,7 @@ span {
     section {
         padding: 10rem 3% 2rem;
     }
-    .services {
+    .details {
         padding-bottom: 7rem;
     }
     .footer {
@@ -511,10 +511,10 @@ span {
         margin-top: 1rem;
         margin-bottom: 3rem;
     }
-    .services h2 {
+    .details h2 {
         margin-bottom: 3rem;
     }
-    .services-container {
+    .details-container {
         grid-template-columns: repeat(1, 1fr);
     }    
 }
