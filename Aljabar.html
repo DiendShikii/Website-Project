@@ -1,108 +1,174 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penyelesaian Aljabar</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #000; /* Latar belakang hitam */
-            color: #fff; /* Teks berwarna putih */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            -webkit-user-select: none; /* Safari */
-            user-select: none;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penyelesaian Aljabar</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .container {
-            background: #1a1a1a; /* Warna latar belakang kontainer */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
-            width: 90%;
-            max-width: 350px;
-            text-align: center; /* Pusatkan isi kontainer */
-        }
+    body {
+      font-family: "Baloo 2", Arial, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7, #a1c4fd, #c2e9fb);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 15px;
+      color: #333;
+    }
 
-        h1, h3 {
-            color: #ff0000; /* Warna judul */
-        }
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      padding: 25px 20px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      animation: popIn 0.6s ease;
+    }
 
-        input, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 100%; /* Sesuaikan panjang input dan button */
-            border-radius: 5px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        
-        input {
-            border: 1px solid #ccc;
-            background-color: #333; /* Warna latar belakang input */
-            color: #fff; /* Teks input berwarna putih */
-        }
+    h1 {
+      font-size: 1.8rem;
+      color: #ff6f61;
+      margin-bottom: 8px;
+    }
 
-        button {
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
+    h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 15px;
+    }
 
-        button:hover {
-            background-color: #ff1100;
-        }
+    p {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      color: #444;
+    }
 
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #ff0000; /* Warna hasil */
-        }
-    </style>
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 12px;
+      border: 2px solid #ddd;
+      background: #fafafa;
+      font-size: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #ff6f61;
+      background: #fff0f0;
+      outline: none;
+      box-shadow: 0 0 6px rgba(255, 111, 97, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+      background-size: 300% 300%;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 111, 97, 0.4);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background-position: right center;
+      box-shadow: 0 6px 15px rgba(255, 111, 97, 0.5);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #6a1b9a;
+      min-height: 24px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 15px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+      input, button {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+
+    /* Animations */
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Aljabar</h1>
-        <h3>By : David</h3>
-        <p>Masukkan nilai a, b, dan c untuk menyelesaikan ax + b = c</p>
-        <input type="number" id="a" placeholder="Masukkan a">
-        <input type="number" id="b" placeholder="Masukkan b">
-        <input type="number" id="c" placeholder="Masukkan c">
-        <button onclick="solveEquation()">Hitung</button>
-        <h3 id="result" class="result"></h3>
-    </div>
+  <div class="container">
+    <h1>🎉 Aljabar Fun 🎉</h1>
+    <p>Masukkan nilai a, b, dan c untuk menyelesaikan <strong>ax + b = c</strong></p>
+    
+    <input type="number" id="a" placeholder="Masukkan a">
+    <input type="number" id="b" placeholder="Masukkan b">
+    <input type="number" id="c" placeholder="Masukkan c">
+    
+    <button onclick="solveEquation()">✨ Hitung ✨</button>
+    <h3 id="result" class="result"></h3>
+  </div>
 
-    <script>
-        function solveEquation() {
-            let a = parseFloat(document.getElementById("a").value);
-            let b = parseFloat(document.getElementById("b").value);
-            let c = parseFloat(document.getElementById("c").value);
-            
-            if (isNaN(a) || isNaN(b) || isNaN(c)) {
-                document.getElementById("result").innerText = "Masukkan angka yang valid!";
-                return;
-            }
-            
-            if (a === 0) {
-                if (b === c) {
-                    document.getElementById("result").innerText = "Tak terhingga banyak solusi.";
-                } else {
-                    document.getElementById("result").innerText = "Tidak ada solusi.";
-                }
-                return;
-            }
-            
-            let x = (c - b) / a;
-            document.getElementById("result").innerText = `Nilai x adalah ${x}`;
-        }
-    </script>
+  <script>
+    function solveEquation() {
+      let a = parseFloat(document.getElementById("a").value);
+      let b = parseFloat(document.getElementById("b").value);
+      let c = parseFloat(document.getElementById("c").value);
+
+      let resultEl = document.getElementById("result");
+
+      if (isNaN(a) || isNaN(b) || isNaN(c)) {
+        resultEl.innerText = "⚠️ Masukkan angka yang valid!";
+        return;
+      }
+
+      if (a === 0) {
+        resultEl.innerText = (b === c) 
+          ? "♾️ Tak terhingga banyak solusi."
+          : "❌ Tidak ada solusi.";
+        return;
+      }
+
+      let x = (c - b) / a;
+      resultEl.innerText = `✅ Nilai x adalah ${x}`;
+    }
+  </script>
 </body>
 </html>
