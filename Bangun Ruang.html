@@ -1,196 +1,286 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Bangun Ruang</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #000;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            -webkit-user-select: none;
-            user-select: none;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Bangun Ruang</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+      transition: background 0.5s ease, color 0.5s ease, border 0.5s ease, box-shadow 0.5s ease;
+    }
 
-        .container {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
-            width: 90%;
-            max-width: 350px;
-            text-align: center;
-        }
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      padding: 20px;
+      transition: background 0.6s ease;
+    }
 
-        h1, h3 {
-            color: #ff0000;
-        }
+    .container {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 35px 25px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      animation: fadeIn 0.8s ease;
+      position: relative;
+      transition: background 0.6s ease, box-shadow 0.6s ease;
+    }
 
-        p {
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-        }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #333;
+      transition: color 0.6s ease;
+    }
 
-        .input-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
+    p {
+      margin: 12px 0 6px;
+      font-weight: 600;
+      color: #444;
+      font-size: 0.95rem;
+      transition: color 0.6s ease;
+    }
 
-        input, button {
-            padding: 10px;
-            width: 100%;
-            border-radius: 5px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        
-        input {
-            border: 1px solid #ccc;
-            background-color: #333;
-            color: #fff;
-        }
+    select, input {
+      width: 100%;
+      padding: 12px;
+      margin: 6px 0 14px;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      background: #fafafa;
+      transition: background 0.4s ease, border 0.4s ease, color 0.4s ease;
+    }
 
-        button {
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
+    select:focus, input:focus {
+      border-color: #fda085;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(253, 160, 133, 0.3);
+    }
 
-        button:hover {
-            background-color: #ff1100;
-        }
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      margin-top: 5px;
+    }
 
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #ff0000;
-        }
-        @media (min-width: 991px) {
-            .container {
-                max-width: 500px;
-            }
-        }
-    </style>
+    button:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #fef3eb;
+      border-left: 6px solid #fda085;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #444;
+      text-align: center;
+      animation: pop 0.4s ease;
+      transition: background 0.6s ease, color 0.6s ease, border 0.6s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0.6; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .toggle-theme {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #fda085;
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.4s ease;
+    }
+
+    .toggle-theme:hover {
+      transform: scale(1.15) rotate(10deg);
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    }
+
+    body.dark .container {
+      background: #1e1e1e;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    body.dark h1 {
+      color: #fff;
+    }
+
+    body.dark p {
+      color: #ddd;
+    }
+
+    body.dark select,
+    body.dark input {
+      background: #2b2b2b;
+      color: #eee;
+      border: 2px solid #444;
+    }
+
+    body.dark select:focus,
+    body.dark input:focus {
+      border-color: #4ca1af;
+      box-shadow: 0 0 10px rgba(76,161,175,0.5);
+    }
+
+    body.dark button {
+      background: linear-gradient(135deg, #4ca1af, #2c3e50);
+    }
+
+    body.dark .result {
+      background: #2b2b2b;
+      border-left: 6px solid #4ca1af;
+      color: #eee;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Kalkulator Bangun Ruang</h1>
-        <h3>By: David</h3>
-        <p>Pilih Bangun Ruang:</p>
-        <select id="shapeType" onchange="updateInputs()">
-            <option value="kubus">Kubus</option>
-            <option value="balok">Balok</option>
-            <option value="prisma">Prisma Segitiga</option>
-            <option value="limas">Limas Segi Empat</option>
-            <option value="tabung">Tabung</option>
-            <option value="kerucut">Kerucut</option>
-            <option value="bola">Bola</option>
-        </select>
-        <p>Pilih Perhitungan:</p>
-        <select id="calculationType" onchange="updateInputs()">
-            <option value="volume">Volume</option>
-            <option value="surfaceArea">Luas Permukaan</option>
-        </select>
-        <div id="inputContainer"></div>
-        <button onclick="calculate()">Hitung</button>
-        <div class="result" id="result">Hasil: -</div>
-    </div>
-    <script>
-        function updateInputs() {
-            const shape = document.getElementById("shapeType").value;
-            const type = document.getElementById("calculationType").value;
-            const inputContainer = document.getElementById("inputContainer");
-            inputContainer.innerHTML = "";
-            
-            const inputFields = {
-                volume: {
-                    kubus: ["Sisi"],
-                    balok: ["Panjang", "Lebar", "Tinggi"],
-                    prisma: ["Alas Segitiga", "Tinggi Segitiga", "Tinggi Prisma"],
-                    limas: ["Luas Alas", "Tinggi"],
-                    tabung: ["Jari-jari", "Tinggi"],
-                    kerucut: ["Jari-jari", "Tinggi"],
-                    bola: ["Jari-jari"]
-                },
-                surfaceArea: {
-                    kubus: ["Sisi"],
-                    balok: ["Panjang", "Lebar", "Tinggi"],
-                    prisma: ["Luas Alas", "Keliling Alas", "Tinggi Prisma"],
-                    limas: ["Luas Alas", "Luas Selimut"],
-                    tabung: ["Jari-jari", "Tinggi"],
-                    kerucut: ["Jari-jari", "Garis Pelukis"],
-                    bola: ["Jari-jari"]
-                }
-            };
-            
-            inputFields[type][shape].forEach(label => {
-                const input = document.createElement("input");
-                input.type = "number";
-                input.placeholder = label;
-                input.setAttribute("data-label", label);
-                inputContainer.appendChild(input);
-            });
+  <div class="container">
+    <button class="toggle-theme" onclick="toggleTheme()">🌙</button>
+    <h1>Kalkulator Bangun Ruang</h1>
+    <p>Pilih Bangun Ruang:</p>
+    <select id="shapeType" title="Pilih Bangun Ruang" onchange="updateInputs()">
+      <option value="kubus">Kubus</option>
+      <option value="balok">Balok</option>
+      <option value="prisma">Prisma Segitiga</option>
+      <option value="limas">Limas Segi Empat</option>
+      <option value="tabung">Tabung</option>
+      <option value="kerucut">Kerucut</option>
+      <option value="bola">Bola</option>
+    </select>
+    <p>Pilih Perhitungan:</p>
+    <select id="calculationType" title="Pilih Perhitungan" onchange="updateInputs()">
+      <option value="volume">Volume</option>
+      <option value="surfaceArea">Luas Permukaan</option>
+    </select>
+    <div id="inputContainer"></div>
+    <button onclick="calculate()">Hitung</button>
+    <div class="result" id="result">Hasil: -</div>
+  </div>
+
+  <script>
+    function updateInputs() {
+      const shape = document.getElementById("shapeType").value;
+      const type = document.getElementById("calculationType").value;
+      const inputContainer = document.getElementById("inputContainer");
+      inputContainer.innerHTML = "";
+      
+      const inputFields = {
+        volume: {
+          kubus: ["Sisi"],
+          balok: ["Panjang", "Lebar", "Tinggi"],
+          prisma: ["Alas Segitiga", "Tinggi Segitiga", "Tinggi Prisma"],
+          limas: ["Luas Alas", "Tinggi"],
+          tabung: ["Jari-jari", "Tinggi"],
+          kerucut: ["Jari-jari", "Tinggi"],
+          bola: ["Jari-jari"]
+        },
+        surfaceArea: {
+          kubus: ["Sisi"],
+          balok: ["Panjang", "Lebar", "Tinggi"],
+          prisma: ["Luas Alas", "Keliling Alas", "Tinggi Prisma"],
+          limas: ["Luas Alas", "Luas Selimut"],
+          tabung: ["Jari-jari", "Tinggi"],
+          kerucut: ["Jari-jari", "Garis Pelukis"],
+          bola: ["Jari-jari"]
         }
-        
-        function calculate() {
-            const shape = document.getElementById("shapeType").value;
-            const type = document.getElementById("calculationType").value;
-            const inputs = document.querySelectorAll("#inputContainer input");
-            let values = Array.from(inputs).map(input => parseFloat(input.value));
-            let result = 0;
-            
-            if (values.some(isNaN)) {
-                document.getElementById("result").textContent = "Harap isi semua input!";
-                return;
-            }
-            
-            if (type === "volume") {
-                switch (shape) {
-                    case "kubus": result = values[0] ** 3; break;
-                    case "balok": result = values[0] * values[1] * values[2]; break;
-                    case "prisma": result = (values[0] * values[1] / 2) * values[2]; break;
-                    case "limas": result = (values[0] * values[1]) / 3; break;
-                    case "tabung": result = Math.PI * values[0] ** 2 * values[1]; break;
-                    case "kerucut": result = (Math.PI * values[0] ** 2 * values[1]) / 3; break;
-                    case "bola": result = (4 / 3) * Math.PI * values[0] ** 3; break;
-                }
-            } else {
-                switch (shape) {
-                    case "kubus": result = 6 * values[0] ** 2; break;
-                    case "balok": result = 2 * (values[0] * values[1] + values[0] * values[2] + values[1] * values[2]); break;
-                    case "prisma": result = 2 * values[0] + values[1] * values[2]; break;
-                    case "limas": result = values[0] + values[1]; break;
-                    case "tabung": result = 2 * Math.PI * values[0] * (values[0] + values[1]); break;
-                    case "kerucut": result = Math.PI * values[0] * (values[0] + values[1]); break;
-                    case "bola": result = 4 * Math.PI * values[0] ** 2; break;
-                }
-            }
-            document.getElementById("result").textContent = `Hasil: ${result.toFixed(2)}`;
+      };
+      
+      inputFields[type][shape].forEach(label => {
+        const input = document.createElement("input");
+        input.type = "number";
+        input.placeholder = label;
+        input.setAttribute("data-label", label);
+        inputContainer.appendChild(input);
+      });
+    }
+    
+    function calculate() {
+      const shape = document.getElementById("shapeType").value;
+      const type = document.getElementById("calculationType").value;
+      const inputs = document.querySelectorAll("#inputContainer input");
+      let values = Array.from(inputs).map(input => parseFloat(input.value));
+      let result = 0;
+      
+      if (values.some(isNaN)) {
+        document.getElementById("result").textContent = "Harap isi semua input!";
+        return;
+      }
+      
+      if (type === "volume") {
+        switch (shape) {
+          case "kubus": result = values[0] ** 3; break;
+          case "balok": result = values[0] * values[1] * values[2]; break;
+          case "prisma": result = (values[0] * values[1] / 2) * values[2]; break;
+          case "limas": result = (values[0] * values[1]) / 3; break;
+          case "tabung": result = Math.PI * values[0] ** 2 * values[1]; break;
+          case "kerucut": result = (Math.PI * values[0] ** 2 * values[1]) / 3; break;
+          case "bola": result = (4 / 3) * Math.PI * values[0] ** 3; break;
         }
-        updateInputs();
-    </script>
+      } else {
+        switch (shape) {
+          case "kubus": result = 6 * values[0] ** 2; break;
+          case "balok": result = 2 * (values[0] * values[1] + values[0] * values[2] + values[1] * values[2]); break;
+          case "prisma": result = 2 * values[0] + values[1] * values[2]; break;
+          case "limas": result = values[0] + values[1]; break;
+          case "tabung": result = 2 * Math.PI * values[0] * (values[0] + values[1]); break;
+          case "kerucut": result = Math.PI * values[0] * (values[0] + values[1]); break;
+          case "bola": result = 4 * Math.PI * values[0] ** 2; break;
+        }
+      }
+      document.getElementById("result").textContent = `Hasil: ${result.toFixed(2)}`;
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      const btn = document.querySelector(".toggle-theme");
+      btn.textContent = document.body.classList.contains("dark") ? "🌞" : "🌙";
+    }
+
+    updateInputs();
+  </script>
 </body>
 </html>
