@@ -1,96 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barisan Aritmatika</title>
-    <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            -webkit-user-select: none; /* Safari */
-            user-select: none;
-        }
-        .container {
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 10px;
-            width: 400px; /* Lebar kolom lebih sempit */
-            margin: 50px auto;
-            text-align: center;
-        }
-        h1 {
-            color: red;
-        }
-        h3 {
-            color: red;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: red;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: darkred;
-        }
-        .result {
-            color: red;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barisan Aritmatika</title>
+  <style>
+    /* Reset dasar */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 420px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .container h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-weight: 500;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    input {
+      padding: 10px 12px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #a6c1ee;
+      outline: none;
+      box-shadow: 0 0 8px rgba(166, 193, 238, 0.6);
+    }
+
+    button {
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      border: none;
+      padding: 12px;
+      border-radius: 15px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+    }
+
+    .result {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #f9f9f9;
+      color: #444;
+      font-size: 0.95rem;
+      min-height: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      border: 1px dashed #ccc;
+    }
+
+    /* Animasi angka */
+    .number {
+      opacity: 0;
+      transform: translateY(10px);
+      display: inline-block;
+      animation: fadeInUp 0.6s forwards, colorShift 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes colorShift {
+      from { color: #a6c1ee; } /* warna pastel lembut */
+      to { color: #222; }      /* berubah ke hitam */
+    }
+
+    /* Responsif */
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+        border-radius: 15px;
+      }
+
+      .container h1 {
+        font-size: 1.5rem;
+      }
+
+      input, button {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Barisan Aritmatika</h1>
-        <h3>By : David</h3>
-        <label for="firstTerm">Suku Pertama (a):</label>
-        <input type="number" id="firstTerm" placeholder="Masukkan suku pertama">
+  <div class="container">
+    <h1>Barisan Aritmatika</h1>
+    <label for="firstTerm">Suku Pertama (a):</label>
+    <input type="number" id="firstTerm" placeholder="Masukkan suku pertama">
 
-        <label for="commonDiff">Beda (d):</label>
-        <input type="number" id="commonDiff" placeholder="Masukkan beda">
+    <label for="commonDiff">Beda (d):</label>
+    <input type="number" id="commonDiff" placeholder="Masukkan beda">
 
-        <label for="numTerms">Jumlah Suku (n):</label>
-        <input type="number" id="numTerms" placeholder="Masukkan jumlah suku">
+    <label for="numTerms">Jumlah Suku (n):</label>
+    <input type="number" id="numTerms" placeholder="Masukkan jumlah suku">
 
-        <button onclick="calculateArithmeticSequence()">Hitung Barisan Aritmatika</button>
+    <button onclick="calculateArithmeticSequence()">Hitung Barisan Aritmatika</button>
 
-        <div class="result" id="result"></div>
-    </div>
+    <div class="result" id="result"></div>
+  </div>
 
-    <script>
-        function calculateArithmeticSequence() {
-            // Mengambil nilai dari input
-            const a = parseFloat(document.getElementById("firstTerm").value);
-            const d = parseFloat(document.getElementById("commonDiff").value);
-            const n = parseInt(document.getElementById("numTerms").value);
+  <script>
+    function calculateArithmeticSequence() {
+      const a = parseFloat(document.getElementById("firstTerm").value);
+      const d = parseFloat(document.getElementById("commonDiff").value);
+      const n = parseInt(document.getElementById("numTerms").value);
 
-            // Validasi input
-            if (isNaN(a) || isNaN(d) || isNaN(n) || n <= 0) {
-                document.getElementById("result").textContent = "Harap masukkan nilai yang valid!";
-                return;
-            }
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = ""; // clear sebelumnya
 
-            // Menghitung barisan aritmatika
-            let sequence = [];
-            for (let i = 0; i < n; i++) {
-                sequence.push(a + i * d);
-            }
+      if (isNaN(a) || isNaN(d) || isNaN(n) || n <= 0) {
+        resultDiv.textContent = "Harap masukkan nilai yang valid!";
+        return;
+      }
 
-            // Menampilkan hasil
-            document.getElementById("result").textContent = "Barisan Aritmatika: " + sequence.join(", ");
-        }
-    </script>
+      let sequence = [];
+      for (let i = 0; i < n; i++) {
+        sequence.push(a + i * d);
+      }
+
+      // tampilkan angka dengan animasi delay
+      sequence.forEach((num, index) => {
+        const span = document.createElement("span");
+        span.classList.add("number");
+        span.style.animationDelay = `${index * 0.2}s, ${index * 0.2 + 0.6}s`; 
+        span.textContent = num + (index < sequence.length - 1 ? "," : "");
+        resultDiv.appendChild(span);
+      });
+    }
+  </script>
 
 </body>
 </html>
