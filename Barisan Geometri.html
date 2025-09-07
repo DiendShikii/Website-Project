@@ -1,96 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barisan Geometri</title>
-    <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            -webkit-user-select: none; /* Safari */
-            user-select: none;
-        }
-        .container {
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 10px;
-            width: 400px; /* Lebar kolom lebih sempit */
-            margin: 50px auto;
-            text-align: center;
-        }
-        h1 {
-            color: red;
-        }
-        h3 {
-            color: red;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: red;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: darkred;
-        }
-        .result {
-            color: red;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barisan Geometri</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      color: #fff;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .container h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .container h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+      opacity: 0.85;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 5px;
+      text-align: left;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      transform: scale(1.02);
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #764ba2, #667eea);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.15);
+      font-size: 0.95rem;
+      min-height: 40px;
+      animation: fadeInUp 0.6s ease-in-out;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    .typing {
+      display: inline-block;
+      border-right: 2px solid #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: caret 0.7s infinite;
+    }
+
+    .number {
+      display: inline-block;
+      opacity: 0;
+      animation: fadeNumber 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeNumber {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes caret {
+      50% { border-color: transparent; }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+      .container h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Barisan Geometri</h1>
+    <h3>By : David</h3>
 
-    <div class="container">
-        <h1>Barisan Geometri</h1>
-        <h3>By : David</h3>
-        <label for="firstTerm">Suku Pertama (a):</label>
-        <input type="number" id="firstTerm" placeholder="Masukkan suku pertama">
+    <label for="firstTerm">Suku Pertama (a):</label>
+    <input type="number" id="firstTerm" placeholder="Masukkan suku pertama">
 
-        <label for="commonRatio">Rasio (r):</label>
-        <input type="number" id="commonRatio" placeholder="Masukkan rasio">
+    <label for="commonRatio">Rasio (r):</label>
+    <input type="number" id="commonRatio" placeholder="Masukkan rasio">
 
-        <label for="numTerms">Jumlah Suku (n):</label>
-        <input type="number" id="numTerms" placeholder="Masukkan jumlah suku">
+    <label for="numTerms">Jumlah Suku (n):</label>
+    <input type="number" id="numTerms" placeholder="Masukkan jumlah suku">
 
-        <button onclick="calculateGeometricSequence()">Hitung Barisan Geometri</button>
+    <button onclick="calculateGeometricSequence()">Hitung Barisan Geometri</button>
 
-        <div class="result" id="result"></div>
-    </div>
+    <div class="result" id="result"></div>
+  </div>
 
-    <script>
-        function calculateGeometricSequence() {
-            // Mengambil nilai dari input
-            const a = parseFloat(document.getElementById("firstTerm").value);
-            const r = parseFloat(document.getElementById("commonRatio").value);
-            const n = parseInt(document.getElementById("numTerms").value);
+  <script>
+    // fungsi efek bunyi ketikan
+    function playClickSound() {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
 
-            // Validasi input
-            if (isNaN(a) || isNaN(r) || isNaN(n) || n <= 0) {
-                document.getElementById("result").textContent = "Harap masukkan nilai yang valid!";
-                return;
-            }
+      oscillator.type = "square";
+      oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); 
+      gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // volume kecil
 
-            // Menghitung barisan geometri
-            let sequence = [];
-            for (let i = 0; i < n; i++) {
-                sequence.push(a * Math.pow(r, i));
-            }
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
 
-            // Menampilkan hasil
-            document.getElementById("result").textContent = "Barisan Geometri: " + sequence.join(", ");
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.05); // bunyi singkat
+    }
+
+    function typeText(text, container, callback) {
+      let i = 0;
+      function typing() {
+        if (i < text.length) {
+          container.textContent += text.charAt(i);
+          playClickSound(); // bunyi setiap huruf
+          i++;
+          setTimeout(typing, 70);
+        } else {
+          container.classList.remove("typing");
+          if (callback) callback();
         }
-    </script>
+      }
+      typing();
+    }
 
+    function calculateGeometricSequence() {
+      const a = parseFloat(document.getElementById("firstTerm").value);
+      const r = parseFloat(document.getElementById("commonRatio").value);
+      const n = parseInt(document.getElementById("numTerms").value);
+      const resultDiv = document.getElementById("result");
+
+      if (isNaN(a) || isNaN(r) || isNaN(n) || n <= 0) {
+        resultDiv.textContent = "Harap masukkan nilai yang valid!";
+        return;
+      }
+
+      let sequence = [];
+      for (let i = 0; i < n; i++) {
+        sequence.push(a * Math.pow(r, i));
+      }
+
+      resultDiv.innerHTML = "";
+      const typingSpan = document.createElement("span");
+      typingSpan.classList.add("typing");
+      resultDiv.appendChild(typingSpan);
+
+      // ketik teks dulu, lalu tampilkan angka
+      typeText("Barisan Geometri: ", typingSpan, () => {
+        sequence.forEach((num, index) => {
+          const span = document.createElement("span");
+          span.classList.add("number");
+          span.style.animationDelay = `${index * 0.2}s`;
+          span.textContent = (index === sequence.length - 1) ? num : num + ", ";
+          resultDiv.appendChild(span);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
