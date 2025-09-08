@@ -1,5 +1,5 @@
 # 💫 About Me:
-💬 Ask me about<br>⚡ Fun fact
+💬 Kamu bisa bertanya dengan ku tentang apapun<br>⚡ Fakta menarik
 
 
 ## 🌐 Socials:
