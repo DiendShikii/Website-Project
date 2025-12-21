@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jam</title>
+    <title>Project Lainnya</title>
     <style>
         * {
             margin: 0;
@@ -51,21 +51,21 @@
             text-align: center;
             font-size: 8rem;
         }
-        .jam{
+        .Project{
             background: var(--bg-color);
             color: white;
         }
-        .jam h1{
+        .Project h1{
             margin-bottom: 5rem;
             color: white;
         }
-        .jam-container{
+        .Project-container{
             display: grid;
             grid-template-columns: repeat(2,1fr);
             align-items: center;
             gap: 2.5rem;
         }
-        .jam-box{
+        .Project-box{
             background-color: var(--main-color);
             color: black;
             height: 250px;
@@ -73,12 +73,12 @@
             cursor: pointer;
             transition: 0.3s ease-in-out;
         }
-        .jam-box:hover{
+        .Project-box:hover{
             background: white;
             color: var(--main-color);
             transform: scale(1.03);
         }
-        .jam-box .jam-info{
+        .Project-box .Project-info{
             display: flex;
             flex-direction: column;
             text-align: left;
@@ -87,12 +87,12 @@
             align-items: baseline;
             padding: 5em;
         }
-        .jam-info h4{
+        .Project-info h4{
             font-size: 2.5rem;
             font-weight: 500;
             margin-bottom: 1rem;
         }
-        .jam-info p{
+        .Project-info p{
             font-size: 1.6rem;
             font-weight: 400;
             max-height: 100px;
@@ -102,27 +102,35 @@
             html {
                 font-size: 55%;
             }
-            .jam h1 {
+            .Project h1 {
                 margin-bottom: 3rem;
             }
-            .jam-container {
+            .Project-container {
                 grid-template-columns: repeat(1, 1fr);
             }    
         }
     </style>
 </head>
 <body>
-    <section class="jam" id="jam">
-        <h1 class="heading">Jam</h1>
+    <section class="Project" id="Project">
+        <h1 class="heading">Project Lainnya</h1>
 
-        <div class="jam-container">
+        <div class="Project-container">
+
+            <div class="Project-box"onclick="window.location.href='https://bookshelf-app-vydfnt.vercel.app/';">
+                <div class="Project-info">
+                    <h4>BookShelf-App</h4>
+                    <p>BookShelf App adalah aplikasi web yang dapat memasukan data buku ke dalam rak, memindahkan data buku antar rak, dan menghapus data buku dari rak. klik di sini untuk menggunakannya!</p>
+                </div>
+            </div>
             
-            <div class="jam-box"onclick="window.location.href='Jam Catur.html';">
-                <div class="jam-info">
+            <div class="Project-box"onclick="window.location.href='Jam Catur.html';">
+                <div class="Project-info">
                     <h4>Jam Catur</h4>
                     <p>Jam Catur adalah alat yang digunakan untuk mengontrol waktu permainan, memastikan setiap pemain memiliki batas waktu yang adil. Ini adalah Jam Catur klik di sini untuk menggunakannya!</p>
                 </div>
             </div>
+        </div>
     </section>
 </body>
 </html>
