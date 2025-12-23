@@ -1,96 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deret Geometri</title>
     <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            -webkit-user-select: none; /* Safari */
-            user-select: none;
-        }
-        .container {
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 10px;
-            width: 400px;
-            margin: 50px auto;
-            text-align: center;
-        }
-        h1 {
-            color: red;
-        }
-        h3 {
-            color: red;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
+        * {
             box-sizing: border-box;
+            font-family: "Poppins", system-ui, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
         }
-        button {
-            background-color: red;
-            color: white;
-            font-weight: bold;
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #667eea, #764ba2);
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --text-color: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --result-bg: rgba(0, 0, 0, 0.25);
+        }
+
+        body.light {
+            --bg-gradient: linear-gradient(135deg, #fdfbfb, #ebedee);
+            --card-bg: #ffffff;
+            --text-color: #222;
+            --input-bg: #f2f2f2;
+            --result-bg: #eaeaea;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: var(--bg-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
+            backdrop-filter: blur(14px);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.8s ease;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle button {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
+            font-size: 0.85rem;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: #000;
+            font-weight: 600;
         }
-        button:hover {
-            background-color: darkred;
+
+        label {
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            display: block;
         }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            background: var(--input-bg);
+            font-size: 0.95rem;
+        }
+
+        button.calculate {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        button.calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+        }
+
         .result {
-            color: red;
             margin-top: 20px;
+            padding: 14px;
+            border-radius: 14px;
+            background: var(--result-bg);
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 600;
+            min-height: 40px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
-<body>
+<body class="dark">
 
     <div class="container">
         <h1>Deret Geometri</h1>
-        <h3>By : David</h3>
-        <label for="firstTerm">Suku Pertama (a):</label>
+
+        <div class="toggle">
+            <button onclick="toggleMode()">🌙 / ☀️ Mode</button>
+        </div>
+
+        <label>Suku Pertama (a)</label>
         <input type="number" id="firstTerm" placeholder="Masukkan suku pertama">
 
-        <label for="commonRatio">Rasio (r):</label>
+        <label>Rasio (r)</label>
         <input type="number" id="commonRatio" placeholder="Masukkan rasio">
 
-        <label for="numTerms">Jumlah Suku (n):</label>
+        <label>Jumlah Suku (n)</label>
         <input type="number" id="numTerms" placeholder="Masukkan jumlah suku">
 
-        <button onclick="calculateGeometricSeries()">Hitung Deret Geometri</button>
+        <button class="calculate" onclick="calculateGeometricSeries()">
+            Hitung Deret Geometri
+        </button>
 
-        <div class="result" id="result"></div>
+        <div class="result" id="result">—</div>
     </div>
 
     <script>
+        function toggleMode() {
+            document.body.classList.toggle("light");
+        }
+
+        function animateCount(element, start, end, duration) {
+            let startTime = null;
+
+            function update(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = "Jumlah Deret Geometri: " + value;
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
         function calculateGeometricSeries() {
-            // Mengambil nilai dari input
             const a = parseFloat(document.getElementById("firstTerm").value);
             const r = parseFloat(document.getElementById("commonRatio").value);
             const n = parseInt(document.getElementById("numTerms").value);
+            const resultEl = document.getElementById("result");
 
-            // Validasi input
             if (isNaN(a) || isNaN(r) || isNaN(n) || n <= 0) {
-                document.getElementById("result").textContent = "Harap masukkan nilai yang valid!";
+                resultEl.textContent = "Harap masukkan nilai yang valid!";
                 return;
             }
 
-            // Menghitung deret geometri
             let sum;
             if (r === 1) {
-                sum = a * n; // Jika rasio = 1, jumlah deret adalah a * n
+                sum = a * n;
             } else {
                 sum = a * (1 - Math.pow(r, n)) / (1 - r);
             }
 
-            // Menampilkan hasil
-            document.getElementById("result").textContent = "Jumlah Deret Geometri: " + sum;
+            animateCount(resultEl, 0, Math.round(sum), 800);
         }
     </script>
 
