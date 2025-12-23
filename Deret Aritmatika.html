@@ -1,91 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deret Aritmatika</title>
     <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            -webkit-user-select: none; /* Safari */
-            user-select: none;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
         }
+
+        body {
+            min-height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 0, 0, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 12s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes gridMove {
+            from {
+                background-position: 0 0, 0 0;
+            }
+            to {
+                background-position: 0 40px, 40px 0;
+            }
+        }
+
         .container {
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 10px;
-            width: 400px;
-            margin: 50px auto;
+            width: 100%;
+            max-width: 420px;
+            padding: 28px;
+            background: rgba(10, 0, 0, 0.88);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 0, 0, 0.45);
+            box-shadow:
+                0 0 25px rgba(255, 0, 0, 0.45),
+                inset 0 0 20px rgba(255, 0, 0, 0.2);
+            backdrop-filter: blur(6px);
             text-align: center;
         }
+
         h1 {
-            color: red;
+            color: #ff2a2a;
+            letter-spacing: 2px;
+            font-size: clamp(22px, 5vw, 28px);
+            text-shadow:
+                0 0 8px #ff2a2a,
+                0 0 18px #ff2a2a;
+            margin-bottom: 6px;
         }
+
         h3 {
-            color: red;
+            font-size: clamp(12px, 3.5vw, 14px);
+            font-weight: normal;
+            color: #ff6b6b;
+            margin-bottom: 22px;
+            text-shadow: 0 0 6px rgba(255, 0, 0, 0.6);
         }
-        input, button {
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #ff8a8a;
+        }
+
+        input {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            box-sizing: border-box;
+            padding: 12px;
+            margin-bottom: 16px;
+            background: #0b0000;
+            border: 1px solid rgba(255, 0, 0, 0.45);
+            border-radius: 8px;
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.15);
         }
+
+        input::placeholder {
+            color: #aa4444;
+        }
+
+        input:focus {
+            border-color: #ff2a2a;
+            box-shadow:
+                0 0 12px rgba(255, 0, 0, 0.7),
+                inset 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
         button {
-            background-color: red;
-            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff2a2a, #7a0000);
+            color: #fff;
+            font-size: 15px;
             font-weight: bold;
+            letter-spacing: 1px;
             cursor: pointer;
+            transition: 0.25s;
+            box-shadow:
+                0 0 18px rgba(255, 0, 0, 0.6),
+                inset 0 0 12px rgba(255, 0, 0, 0.4);
         }
+
         button:hover {
-            background-color: darkred;
+            transform: translateY(-2px);
+            box-shadow:
+                0 0 28px rgba(255, 0, 0, 0.9),
+                inset 0 0 16px rgba(255, 0, 0, 0.5);
         }
+
         .result {
-            color: red;
-            margin-top: 20px;
+            margin-top: 22px;
+            padding: 14px;
+            border-radius: 8px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.45);
+            color: #ff2a2a;
+            font-weight: bold;
+            font-size: clamp(14px, 4vw, 16px);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            box-shadow: inset 0 0 18px rgba(255, 0, 0, 0.25);
+            min-height: 44px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 460px;
+                padding: 34px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Deret Aritmatika</h1>
-        <h3>By : David</h3>
-        <label for="firstTerm">Suku Pertama (a):</label>
-        <input type="number" id="firstTerm" placeholder="Masukkan suku pertama">
+        <h1>DERET ARITMATIKA</h1>
 
-        <label for="commonDiff">Beda (d):</label>
-        <input type="number" id="commonDiff" placeholder="Masukkan beda">
+        <label>Suku Pertama (a)</label>
+        <input type="number" id="firstTerm" placeholder="Masukkan nilai a">
 
-        <label for="numTerms">Jumlah Suku (n):</label>
-        <input type="number" id="numTerms" placeholder="Masukkan jumlah suku">
+        <label>Beda (d)</label>
+        <input type="number" id="commonDiff" placeholder="Masukkan nilai d">
 
-        <button onclick="calculateArithmeticSeries()">Hitung Deret Aritmatika</button>
+        <label>Jumlah Suku (n)</label>
+        <input type="number" id="numTerms" placeholder="Masukkan nilai n">
 
-        <div class="result" id="result"></div>
+        <button onclick="calculateArithmeticSeries()">HITUNG</button>
+
+        <div class="result" id="result">Menunggu input...</div>
     </div>
 
     <script>
+        function animateCount(element, start, end, duration) {
+            let startTime = null;
+
+            function update(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = "Jumlah Deret = " + value;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
         function calculateArithmeticSeries() {
-            // Mengambil nilai dari input
             const a = parseFloat(document.getElementById("firstTerm").value);
             const d = parseFloat(document.getElementById("commonDiff").value);
             const n = parseInt(document.getElementById("numTerms").value);
+            const resultEl = document.getElementById("result");
 
-            // Validasi input
             if (isNaN(a) || isNaN(d) || isNaN(n) || n <= 0) {
-                document.getElementById("result").textContent = "Harap masukkan nilai yang valid!";
+                resultEl.textContent = "Input tidak valid ⚠️";
                 return;
             }
 
-            // Menghitung deret aritmatika
-            let sum = (n / 2) * (2 * a + (n - 1) * d);
-
-            // Menampilkan hasil
-            document.getElementById("result").textContent = "Jumlah Deret Aritmatika: " + sum;
+            const sum = (n / 2) * (2 * a + (n - 1) * d);
+            animateCount(resultEl, 0, sum, 900);
         }
     </script>
 
